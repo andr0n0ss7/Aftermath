@@ -1,0 +1,18 @@
+{
+	"FileVersion": 3,
+	"Version": 2,
+	"VersionName": "0.2.0",
+	"FriendlyName": "Aftermath Core",
+	"Description": "Ballistic evidence, investigation tools, case data and scoring for Aftermath.",
+	"Category": "Aftermath",
+	"CreatedBy": "Aftermath",
+	"EnabledByDefault": true,
+	"CanContainContent": true,
+	"Modules": [
+		{ "Name": "AftermathCore", "Type": "Runtime", "LoadingPhase": "Default" }
+	],
+	"Plugins": [
+		{ "Name": "EnhancedInput", "Enabled": true },
+		{ "Name": "CableComponent", "Enabled": true }
+	]
+}

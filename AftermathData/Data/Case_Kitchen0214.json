@@ -1,0 +1,911 @@
+{
+ "CaseId": "26-1104",
+ "Title": "Kitchen, 2:14 a.m.",
+ "Briefing": "Shots were fired inside a ground-floor flat. The resident called it in; the other party ran out through the front door before patrol arrived. Patrol did not touch the weapons: the resident's pistol lies where he put it down on the kitchen island, and a revolver lies in the hallway by the front door. Casualties have been removed. Everything else is as it was found.",
+ "Statement": "Someone broke in through the back. He fired at me first from the hallway. I fired back once, from the kitchen.",
+ "StatementTruth": "Contradicted",
+ "Shooters": [
+  {
+   "Key": "R",
+   "Name": "Resident",
+   "Muzzle": {
+    "X": 300,
+    "Y": 295.0,
+    "Z": 140.0
+   },
+   "WeaponKey": "9mm",
+   "Weapon": "9 mm semi-automatic pistol",
+   "Posture": "Standing"
+  },
+  {
+   "Key": "I",
+   "Name": "Intruder",
+   "Muzzle": {
+    "X": -100,
+    "Y": 315.0,
+    "Z": 145.0
+   },
+   "WeaponKey": "38",
+   "Weapon": ".38 Special revolver",
+   "Posture": "Standing"
+  }
+ ],
+ "Shots": [
+  {
+   "Id": "R1",
+   "Shooter": "R",
+   "Caliber": "9mm Luger",
+   "Order": 1,
+   "Direction": {
+    "X": 0.906892,
+    "Y": -0.416207,
+    "Z": 0.065717
+   },
+   "EvidenceIds": [
+    "E01"
+   ]
+  },
+  {
+   "Id": "I1",
+   "Shooter": "I",
+   "Caliber": ".38 Special",
+   "Order": 2,
+   "Direction": {
+    "X": 0.976023,
+    "Y": -0.217073,
+    "Z": -0.016079
+   },
+   "EvidenceIds": [
+    "E02"
+   ]
+  },
+  {
+   "Id": "R2",
+   "Shooter": "R",
+   "Caliber": "9mm Luger",
+   "Order": 3,
+   "Direction": {
+    "X": -0.968442,
+    "Y": -0.247052,
+    "Z": -0.03294
+   },
+   "EvidenceIds": [
+    "E03",
+    "E04",
+    "E05"
+   ]
+  },
+  {
+   "Id": "I2",
+   "Shooter": "I",
+   "Caliber": ".38 Special",
+   "Order": 4,
+   "Direction": {
+    "X": 0.981856,
+    "Y": 0.122732,
+    "Z": -0.144551
+   },
+   "EvidenceIds": [
+    "E17",
+    "E06"
+   ]
+  },
+  {
+   "Id": "R3",
+   "Shooter": "R",
+   "Caliber": "9mm Luger",
+   "Order": 5,
+   "Direction": {
+    "X": -0.800226,
+    "Y": -0.598809,
+    "Z": 0.032662
+   },
+   "EvidenceIds": [
+    "E07",
+    "E08",
+    "E09"
+   ]
+  }
+ ],
+ "Evidence": [
+  {
+   "Id": "E01",
+   "Kind": "GlassHole",
+   "Role": "Genuine",
+   "Location": "Kitchen window, upper hole",
+   "Position": {
+    "X": 507.0,
+    "Y": 200,
+    "Z": 155.0
+   },
+   "ShotId": "R1",
+   "DiameterMm": 10.373,
+   "ImpactAngleDeg": 65.079,
+   "LongAxisDeg": 171.027,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1000,
+   "Normal": {
+    "X": -1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": 1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "inside the kitchen",
+   "FarSideLabel": "outside, in the yard",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "glass_float"
+  },
+  {
+   "Id": "E02",
+   "Kind": "GlassHole",
+   "Role": "Genuine",
+   "Location": "Kitchen window, lower hole",
+   "Position": {
+    "X": 507.0,
+    "Y": 180.0,
+    "Z": 135.0
+   },
+   "ShotId": "I1",
+   "DiameterMm": 10.431,
+   "ImpactAngleDeg": 77.428,
+   "LongAxisDeg": -175.764,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1097,
+   "Normal": {
+    "X": -1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": 1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "inside the kitchen",
+   "FarSideLabel": "outside, in the yard",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "glass_float"
+  },
+  {
+   "Id": "E03",
+   "Kind": "DrywallEntry",
+   "Role": "Genuine",
+   "Location": "Partition wall, kitchen side",
+   "Position": {
+    "X": 6.0,
+    "Y": 220.0,
+    "Z": 130.0
+   },
+   "ShotId": "R2",
+   "DiameterMm": 9.471,
+   "ImpactAngleDeg": 75.568,
+   "LongAxisDeg": -7.595,
+   "PartnerId": "E04",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1194,
+   "Normal": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": -1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "drywall_painted"
+  },
+  {
+   "Id": "E04",
+   "Kind": "DrywallExit",
+   "Role": "Genuine",
+   "Location": "Partition wall, hallway side",
+   "Position": {
+    "X": -6.0,
+    "Y": 216.939,
+    "Z": 129.592
+   },
+   "ShotId": "R2",
+   "DiameterMm": 9.02,
+   "ImpactAngleDeg": 75.568,
+   "LongAxisDeg": -172.405,
+   "PartnerId": "E03",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1291,
+   "Normal": {
+    "X": -1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": 1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "drywall_painted"
+  },
+  {
+   "Id": "E05",
+   "Kind": "PlasterCrater",
+   "Role": "Genuine",
+   "Location": "Hallway end wall",
+   "Position": {
+    "X": -200,
+    "Y": 167.449,
+    "Z": 122.993
+   },
+   "ShotId": "R2",
+   "DiameterMm": 9.02,
+   "ImpactAngleDeg": 75.568,
+   "LongAxisDeg": -7.595,
+   "PartnerId": "",
+   "Projectile": "Luger9mmFMJ",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1388,
+   "Normal": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": -1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "plaster_on_masonry"
+  },
+  {
+   "Id": "E06",
+   "Kind": "SteelHole",
+   "Role": "Genuine",
+   "Location": "Fridge door, low",
+   "Position": {
+    "X": 420.0,
+    "Y": 384.269,
+    "Z": 100.481
+   },
+   "ShotId": "I2",
+   "DiameterMm": 9.07,
+   "ImpactAngleDeg": 80.872,
+   "LongAxisDeg": 19.263,
+   "PartnerId": "",
+   "Projectile": "Special38LRNDeformed",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1485,
+   "Normal": {
+    "X": -1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": 1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "steel_appliance"
+  },
+  {
+   "Id": "E07",
+   "Kind": "DrywallEntry",
+   "Role": "Genuine",
+   "Location": "Partition wall, kitchen side",
+   "Position": {
+    "X": 6.0,
+    "Y": 75.0,
+    "Z": 152.0
+   },
+   "ShotId": "R3",
+   "DiameterMm": 9.471,
+   "ImpactAngleDeg": 53.152,
+   "LongAxisDeg": 3.122,
+   "PartnerId": "E08",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1582,
+   "Normal": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": -1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "drywall_painted"
+  },
+  {
+   "Id": "E08",
+   "Kind": "DrywallExit",
+   "Role": "Genuine",
+   "Location": "Partition wall, hallway side",
+   "Position": {
+    "X": -6.0,
+    "Y": 66.02,
+    "Z": 152.49
+   },
+   "ShotId": "R3",
+   "DiameterMm": 9.02,
+   "ImpactAngleDeg": 53.152,
+   "LongAxisDeg": 176.878,
+   "PartnerId": "E07",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1679,
+   "Normal": {
+    "X": -1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": 1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "drywall_painted"
+  },
+  {
+   "Id": "E09",
+   "Kind": "PlasterCrater",
+   "Role": "Genuine",
+   "Location": "Hallway side wall",
+   "Position": {
+    "X": -94.227,
+    "Y": 0,
+    "Z": 156.091
+   },
+   "ShotId": "R3",
+   "DiameterMm": 9.02,
+   "ImpactAngleDeg": 36.785,
+   "LongAxisDeg": 177.663,
+   "PartnerId": "",
+   "Projectile": "Luger9mmFMJ",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 1776,
+   "Normal": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 1.0,
+    "Y": 0.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "plaster_on_masonry"
+  },
+  {
+   "Id": "E10",
+   "Kind": "CartridgeCase",
+   "Role": "Genuine",
+   "Location": "Kitchen floor",
+   "Position": {
+    "X": 345.0,
+    "Y": 282.0,
+    "Z": 0.48
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 0.0,
+   "LongAxisDeg": 0.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": true,
+   "YawDeg": 34.38,
+   "Seed": 1873,
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": ""
+  },
+  {
+   "Id": "E11",
+   "Kind": "CartridgeCase",
+   "Role": "Genuine",
+   "Location": "Kitchen floor",
+   "Position": {
+    "X": 225.0,
+    "Y": 308.0,
+    "Z": 0.48
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 0.0,
+   "LongAxisDeg": 0.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": true,
+   "YawDeg": 126.05,
+   "Seed": 1970,
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": ""
+  },
+  {
+   "Id": "E12",
+   "Kind": "CartridgeCase",
+   "Role": "Genuine",
+   "Location": "Under the counter kick-plate",
+   "Position": {
+    "X": 372.0,
+    "Y": 343.5,
+    "Z": 0.48
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 0.0,
+   "LongAxisDeg": 0.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": true,
+   "bOnFloor": true,
+   "YawDeg": 68.75,
+   "Seed": 2067,
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": ""
+  },
+  {
+   "Id": "E13",
+   "Kind": "OldRimfireCase",
+   "Role": "Decoy",
+   "Location": "Hallway floor, corner",
+   "Position": {
+    "X": -42.0,
+    "Y": 36.0,
+    "Z": 0.3
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 0.0,
+   "LongAxisDeg": 0.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": true,
+   "YawDeg": 120.32,
+   "Seed": 2164,
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": ""
+  },
+  {
+   "Id": "E14",
+   "Kind": "PaintedHole",
+   "Role": "Decoy",
+   "Location": "Kitchen east wall",
+   "Position": {
+    "X": 500,
+    "Y": 295.0,
+    "Z": 176.0
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 0.0,
+   "LongAxisDeg": 0.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 2261,
+   "Normal": {
+    "X": -1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": 1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "plaster_on_masonry"
+  },
+  {
+   "Id": "E15",
+   "Kind": "WallPlugHoles",
+   "Role": "Decoy",
+   "Location": "Hallway end wall",
+   "Position": {
+    "X": -200,
+    "Y": 95.0,
+    "Z": 162.0
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 0.0,
+   "LongAxisDeg": 0.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0.0,
+   "Seed": 2358,
+   "Normal": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceRight": {
+    "X": 0.0,
+    "Y": -1.0,
+    "Z": 0.0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": "plaster_on_masonry"
+  },
+  {
+   "Id": "E16",
+   "Kind": "Clock",
+   "Role": "Context",
+   "Location": "Kitchen floor by the window",
+   "Position": {
+    "X": 455.0,
+    "Y": 72.0,
+    "Z": 3.0
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 0.0,
+   "LongAxisDeg": 0.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": true,
+   "YawDeg": 0.0,
+   "Seed": 2455,
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "NearSideLabel": "",
+   "FarSideLabel": "",
+   "DepartureAngleDeg": 0,
+   "SurfaceId": ""
+  },
+  {
+   "Id": "E17",
+   "Kind": "RicochetMark",
+   "Role": "Genuine",
+   "Location": "Stone worktop beside the sink",
+   "Position": {
+    "X": 260.0,
+    "Y": 360.0,
+    "Z": 92.0
+   },
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "ShotId": "I2",
+   "DiameterMm": 9.07,
+   "ImpactAngleDeg": 8.311,
+   "LongAxisDeg": 7.125,
+   "DepartureAngleDeg": 3.0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": 0,
+   "Seed": 2717,
+   "SurfaceId": "stone_worktop"
+  },
+  {
+   "Id": "E18",
+   "Kind": "Pistol",
+   "Role": "Genuine",
+   "Location": "Kitchen island worktop",
+   "Position": {
+    "X": 275.0,
+    "Y": 220.0,
+    "Z": 94.5
+   },
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 90,
+   "LongAxisDeg": 0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": false,
+   "YawDeg": -25,
+   "Seed": 2803,
+   "Weapon": {
+    "WeaponKey": "9mm",
+    "Description": "Striker-fired 9 mm semi-automatic pistol, 15-round magazine",
+    "Safety": "No manual safety (striker-fired; trigger safety only)",
+    "Action": "Slide forward, in battery",
+    "bHasMagazine": true,
+    "bMagazineSeated": true,
+    "MagazineCapacity": 15,
+    "MagazineRounds": 12,
+    "MagazineHeadstamp": "9mm LUGER",
+    "ChamberState": "Live 9mm LUGER round in the chamber",
+    "CylinderChambers": [],
+    "CylinderNote": "",
+    "FirearmAsset": "/Game/Aftermath/Firearms/DA_Firearm_Pistol9mm.DA_Firearm_Pistol9mm"
+   },
+   "SurfaceId": ""
+  },
+  {
+   "Id": "E19",
+   "Kind": "Revolver",
+   "Role": "Genuine",
+   "Location": "Hallway floor by the front door",
+   "Position": {
+    "X": -155.0,
+    "Y": 285.0,
+    "Z": 2.0
+   },
+   "Normal": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+   },
+   "SurfaceRight": {
+    "X": 1,
+    "Y": 0,
+    "Z": 0
+   },
+   "SurfaceUp": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+   },
+   "ShotId": "",
+   "DiameterMm": 0,
+   "ImpactAngleDeg": 90,
+   "LongAxisDeg": 0,
+   "PartnerId": "",
+   "Projectile": "None",
+   "bHidden": false,
+   "bOnFloor": true,
+   "YawDeg": 140,
+   "Seed": 2911,
+   "Weapon": {
+    "WeaponKey": "38",
+    "Description": "Six-shot .38 Special double-action revolver, cylinder rotates counter-clockwise (viewed from the rear)",
+    "Safety": "No manual safety",
+    "Action": "Hammer down, cylinder closed",
+    "bHasMagazine": false,
+    "bMagazineSeated": false,
+    "MagazineCapacity": 0,
+    "MagazineRounds": 0,
+    "MagazineHeadstamp": "",
+    "ChamberState": "",
+    "CylinderChambers": [
+     "Fired case (.38 SPL, primer struck)",
+     "Live round (.38 SPL)",
+     "Live round (.38 SPL)",
+     "Live round (.38 SPL)",
+     "Live round (.38 SPL)",
+     "Fired case (.38 SPL, primer struck)"
+    ],
+    "CylinderNote": "Listed clockwise from the chamber under the hammer, viewed from the rear.",
+    "FirearmAsset": "/Game/Aftermath/Firearms/DA_Firearm_Revolver38.DA_Firearm_Revolver38"
+   },
+   "SurfaceId": ""
+  }
+ ],
+ "SequenceEvidenceIds": [
+  "E01",
+  "E02"
+ ],
+ "Swabs": 8,
+ "Tolerances": {
+  "ShooterFullCm": 75,
+  "ShooterPartialCm": 150,
+  "ConvergenceRadiusCm": 32
+ }
+}

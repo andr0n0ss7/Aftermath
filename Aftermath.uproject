@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.4",
+	"Category": "",
+	"Description": "Aftermath - forensic shooting reconstruction",
+	"Modules": [
+		{
+			"Name": "Aftermath",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [ "AftermathCore" ]
+		}
+	],
+	"Plugins": [
+		{ "Name": "AftermathCore", "Enabled": true },
+		{ "Name": "EnhancedInput", "Enabled": true },
+		{ "Name": "CableComponent", "Enabled": true },
+		{ "Name": "PythonScriptPlugin", "Enabled": true },
+		{ "Name": "EditorScriptingUtilities", "Enabled": true }
+	],
+	"TargetPlatforms": [ "Windows" ]
+}

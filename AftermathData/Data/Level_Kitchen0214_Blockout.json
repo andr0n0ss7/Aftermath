@@ -1,0 +1,1012 @@
+{
+ "Boxes": [
+  {
+   "Name": "BX_00_Floor_Tile",
+   "Center": {
+    "X": 250.0,
+    "Y": 200.0,
+    "Z": 0.0
+   },
+   "Size": {
+    "X": 500,
+    "Y": 400,
+    "Z": 2.0
+   },
+   "Material": "Floor_Tile"
+  },
+  {
+   "Name": "BX_01_Floor_Oak",
+   "Center": {
+    "X": -100.0,
+    "Y": 200.0,
+    "Z": 0.0
+   },
+   "Size": {
+    "X": 200,
+    "Y": 400,
+    "Z": 2.0
+   },
+   "Material": "Floor_Oak"
+  },
+  {
+   "Name": "BX_02_Ceiling",
+   "Center": {
+    "X": 150.0,
+    "Y": 200.0,
+    "Z": 260.0
+   },
+   "Size": {
+    "X": 730.0,
+    "Y": 430.0,
+    "Z": 2.0
+   },
+   "Material": "Ceiling"
+  },
+  {
+   "Name": "BX_03_Floor_Oak",
+   "Center": {
+    "X": 0.0,
+    "Y": 315.0,
+    "Z": 0.6
+   },
+   "Size": {
+    "X": 12.0,
+    "Y": 90.0,
+    "Z": 2.0
+   },
+   "Material": "Floor_Oak"
+  },
+  {
+   "Name": "BX_04_Wall_Hall",
+   "Center": {
+    "X": -110.5,
+    "Y": -7.5,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 209.0,
+    "Y": 15.0,
+    "Z": 260.0
+   },
+   "Material": "Wall_Hall"
+  },
+  {
+   "Name": "BX_05_Wall_Kitchen",
+   "Center": {
+    "X": 254.5,
+    "Y": -7.5,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 521.0,
+    "Y": 15.0,
+    "Z": 260.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_06_Wall_Hall",
+   "Center": {
+    "X": -110.5,
+    "Y": 407.5,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 209.0,
+    "Y": 15.0,
+    "Z": 260.0
+   },
+   "Material": "Wall_Hall"
+  },
+  {
+   "Name": "BX_07_Wall_Kitchen",
+   "Center": {
+    "X": 254.5,
+    "Y": 407.5,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 521.0,
+    "Y": 15.0,
+    "Z": 260.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_08_Wall_Hall",
+   "Center": {
+    "X": -207.5,
+    "Y": 200.0,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 400,
+    "Z": 260.0
+   },
+   "Material": "Wall_Hall"
+  },
+  {
+   "Name": "BX_09_Wall_Kitchen",
+   "Center": {
+    "X": 507.5,
+    "Y": 50.0,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 100,
+    "Z": 260.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_10_Wall_Kitchen",
+   "Center": {
+    "X": 507.5,
+    "Y": 320.0,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 160.0,
+    "Z": 260.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_11_Furniture",
+   "Center": {
+    "X": 507.5,
+    "Y": 170.0,
+    "Z": 45.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 140.0,
+    "Z": 90.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_12_Wall_Kitchen",
+   "Center": {
+    "X": 507.5,
+    "Y": 170.0,
+    "Z": 240.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 140.0,
+    "Z": 40.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_13_Wall_Kitchen",
+   "Center": {
+    "X": 0.0,
+    "Y": 135.0,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 12.0,
+    "Y": 270.0,
+    "Z": 260.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_14_Wall_Kitchen",
+   "Center": {
+    "X": 0.0,
+    "Y": 380.0,
+    "Z": 130.0
+   },
+   "Size": {
+    "X": 12.0,
+    "Y": 40.0,
+    "Z": 260.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_15_Wall_Kitchen",
+   "Center": {
+    "X": 0.0,
+    "Y": 315.0,
+    "Z": 235.0
+   },
+   "Size": {
+    "X": 12.0,
+    "Y": 90.0,
+    "Z": 50.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_16_Wall_Kitchen",
+   "Center": {
+    "X": 0.0,
+    "Y": 268.0,
+    "Z": 107.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 4.0,
+    "Z": 214.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_17_Wall_Kitchen",
+   "Center": {
+    "X": 0.0,
+    "Y": 362.0,
+    "Z": 107.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 4.0,
+    "Z": 214.0
+   },
+   "Material": "Wall_Kitchen"
+  },
+  {
+   "Name": "BX_18_Furniture",
+   "Center": {
+    "X": 0.0,
+    "Y": 315.0,
+    "Z": 212.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 98.0,
+    "Z": 4.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_19_Wall_Hall",
+   "Center": {
+    "X": -44.0,
+    "Y": 358.0,
+    "Z": 104.0
+   },
+   "Size": {
+    "X": 84.0,
+    "Y": 4.0,
+    "Z": 208.0
+   },
+   "Material": "Wall_Hall"
+  },
+  {
+   "Name": "BX_20_Furniture",
+   "Center": {
+    "X": 250.0,
+    "Y": 0.75,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 500,
+    "Y": 2.0,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_21_Furniture",
+   "Center": {
+    "X": 250.0,
+    "Y": 399.25,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 500,
+    "Y": 2.0,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_22_Furniture",
+   "Center": {
+    "X": -103.0,
+    "Y": 0.75,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 194.0,
+    "Y": 2.0,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_23_Furniture",
+   "Center": {
+    "X": -103.0,
+    "Y": 399.25,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 194.0,
+    "Y": 2.0,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_24_Furniture",
+   "Center": {
+    "X": -199.25,
+    "Y": 200.0,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 2.0,
+    "Y": 400,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_25_Furniture",
+   "Center": {
+    "X": 499.25,
+    "Y": 200.0,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 2.0,
+    "Y": 400,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_26_Furniture",
+   "Center": {
+    "X": 6.75,
+    "Y": 133.0,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 2.0,
+    "Y": 266.0,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_27_Furniture",
+   "Center": {
+    "X": -6.75,
+    "Y": 133.0,
+    "Z": 4.5
+   },
+   "Size": {
+    "X": 2.0,
+    "Y": 266.0,
+    "Z": 9.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_28_Furniture",
+   "Center": {
+    "X": 507.5,
+    "Y": 170.0,
+    "Z": 88.0
+   },
+   "Size": {
+    "X": 15.0,
+    "Y": 148.0,
+    "Z": 4.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_29_Furniture",
+   "Center": {
+    "X": 498.0,
+    "Y": 170.0,
+    "Z": 90.0
+   },
+   "Size": {
+    "X": 8.0,
+    "Y": 150.0,
+    "Z": 4.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_30_Furniture",
+   "Center": {
+    "X": 507.5,
+    "Y": 102.5,
+    "Z": 155.0
+   },
+   "Size": {
+    "X": 7.0,
+    "Y": 5.0,
+    "Z": 130.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_31_Furniture",
+   "Center": {
+    "X": 507.5,
+    "Y": 237.5,
+    "Z": 155.0
+   },
+   "Size": {
+    "X": 7.0,
+    "Y": 5.0,
+    "Z": 130.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_32_Furniture",
+   "Center": {
+    "X": 507.5,
+    "Y": 170.0,
+    "Z": 92.5
+   },
+   "Size": {
+    "X": 7.0,
+    "Y": 140.0,
+    "Z": 5.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_33_Furniture",
+   "Center": {
+    "X": 507.5,
+    "Y": 170.0,
+    "Z": 217.5
+   },
+   "Size": {
+    "X": 7.0,
+    "Y": 140.0,
+    "Z": 5.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_34_Furniture",
+   "Center": {
+    "X": 245.0,
+    "Y": 373.5,
+    "Z": 5.0
+   },
+   "Size": {
+    "X": 330.0,
+    "Y": 53.0,
+    "Z": 10.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_35_Furniture",
+   "Center": {
+    "X": 245.0,
+    "Y": 370.0,
+    "Z": 49.0
+   },
+   "Size": {
+    "X": 330.0,
+    "Y": 60.0,
+    "Z": 78.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_36_Furniture",
+   "Center": {
+    "X": 108.5,
+    "Y": 339.25,
+    "Z": 49.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 73.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_37_Furniture",
+   "Center": {
+    "X": 163.3,
+    "Y": 339.25,
+    "Z": 49.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 73.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_38_Furniture",
+   "Center": {
+    "X": 218.1,
+    "Y": 339.25,
+    "Z": 49.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 73.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_39_Furniture",
+   "Center": {
+    "X": 272.9,
+    "Y": 339.25,
+    "Z": 49.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 73.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_40_Furniture",
+   "Center": {
+    "X": 327.7,
+    "Y": 339.25,
+    "Z": 49.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 73.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_41_Furniture",
+   "Center": {
+    "X": 382.5,
+    "Y": 339.25,
+    "Z": 49.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 73.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_42_Furniture",
+   "Center": {
+    "X": 245.0,
+    "Y": 368.0,
+    "Z": 90.0
+   },
+   "Size": {
+    "X": 334.0,
+    "Y": 64.0,
+    "Z": 4.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_43_Furniture",
+   "Center": {
+    "X": 196.0,
+    "Y": 370.0,
+    "Z": 91.5
+   },
+   "Size": {
+    "X": 68.0,
+    "Y": 40.0,
+    "Z": 2.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_44_Furniture",
+   "Center": {
+    "X": 245.0,
+    "Y": 382.5,
+    "Z": 182.5
+   },
+   "Size": {
+    "X": 330.0,
+    "Y": 35.0,
+    "Z": 75.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_45_Furniture",
+   "Center": {
+    "X": 108.5,
+    "Y": 364.25,
+    "Z": 182.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 71.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_46_Furniture",
+   "Center": {
+    "X": 163.3,
+    "Y": 364.25,
+    "Z": 182.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 71.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_47_Furniture",
+   "Center": {
+    "X": 218.1,
+    "Y": 364.25,
+    "Z": 182.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 71.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_48_Furniture",
+   "Center": {
+    "X": 272.9,
+    "Y": 364.25,
+    "Z": 182.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 71.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_49_Furniture",
+   "Center": {
+    "X": 327.7,
+    "Y": 364.25,
+    "Z": 182.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 71.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_50_Furniture",
+   "Center": {
+    "X": 382.5,
+    "Y": 364.25,
+    "Z": 182.5
+   },
+   "Size": {
+    "X": 53.0,
+    "Y": 2.0,
+    "Z": 71.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_51_Furniture",
+   "Center": {
+    "X": 457.5,
+    "Y": 357.5,
+    "Z": 92.5
+   },
+   "Size": {
+    "X": 75.0,
+    "Y": 75.0,
+    "Z": 185.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_52_Furniture",
+   "Center": {
+    "X": 419.75,
+    "Y": 357.5,
+    "Z": 124.0
+   },
+   "Size": {
+    "X": 2.0,
+    "Y": 73.0,
+    "Z": 2.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_53_Furniture",
+   "Center": {
+    "X": 320.0,
+    "Y": 200.0,
+    "Z": 5.0
+   },
+   "Size": {
+    "X": 150.0,
+    "Y": 70.0,
+    "Z": 10.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_54_Furniture",
+   "Center": {
+    "X": 320.0,
+    "Y": 200.0,
+    "Z": 49.0
+   },
+   "Size": {
+    "X": 160.0,
+    "Y": 80.0,
+    "Z": 78.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_55_Furniture",
+   "Center": {
+    "X": 320.0,
+    "Y": 190.0,
+    "Z": 90.5
+   },
+   "Size": {
+    "X": 170.0,
+    "Y": 110.0,
+    "Z": 5.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_56_Furniture",
+   "Center": {
+    "X": 267.0,
+    "Y": 240.5,
+    "Z": 49.0
+   },
+   "Size": {
+    "X": 42.0,
+    "Y": 2.0,
+    "Z": 70.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_57_Furniture",
+   "Center": {
+    "X": 317.0,
+    "Y": 240.5,
+    "Z": 49.0
+   },
+   "Size": {
+    "X": 42.0,
+    "Y": 2.0,
+    "Z": 70.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_58_Furniture",
+   "Center": {
+    "X": 367.0,
+    "Y": 240.5,
+    "Z": 49.0
+   },
+   "Size": {
+    "X": 42.0,
+    "Y": 2.0,
+    "Z": 70.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_59_Furniture",
+   "Center": {
+    "X": -183.0,
+    "Y": 52.5,
+    "Z": 41.0
+   },
+   "Size": {
+    "X": 34.0,
+    "Y": 65.0,
+    "Z": 82.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_60_Furniture",
+   "Center": {
+    "X": -182.0,
+    "Y": 52.5,
+    "Z": 83.5
+   },
+   "Size": {
+    "X": 36.0,
+    "Y": 69.0,
+    "Z": 3.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_61_Furniture",
+   "Center": {
+    "X": -100.0,
+    "Y": 398.5,
+    "Z": 165.0
+   },
+   "Size": {
+    "X": 70.0,
+    "Y": 3.0,
+    "Z": 60.0
+   },
+   "Material": "Furniture"
+  },
+  {
+   "Name": "BX_62_Wall_Hall",
+   "Center": {
+    "X": -197.5,
+    "Y": 305.0,
+    "Z": 105.0
+   },
+   "Size": {
+    "X": 5.0,
+    "Y": 90.0,
+    "Z": 210.0
+   },
+   "Material": "Wall_Hall"
+  },
+  {
+   "Name": "BX_63_Wall_Hall",
+   "Center": {
+    "X": -196.5,
+    "Y": 258.0,
+    "Z": 107.0
+   },
+   "Size": {
+    "X": 7.0,
+    "Y": 4.0,
+    "Z": 214.0
+   },
+   "Material": "Wall_Hall"
+  },
+  {
+   "Name": "BX_64_Wall_Hall",
+   "Center": {
+    "X": -196.5,
+    "Y": 352.0,
+    "Z": 107.0
+   },
+   "Size": {
+    "X": 7.0,
+    "Y": 4.0,
+    "Z": 214.0
+   },
+   "Material": "Wall_Hall"
+  },
+  {
+   "Name": "BX_65_Furniture",
+   "Center": {
+    "X": -196.5,
+    "Y": 305.0,
+    "Z": 212.0
+   },
+   "Size": {
+    "X": 7.0,
+    "Y": 98.0,
+    "Z": 4.0
+   },
+   "Material": "Furniture"
+  }
+ ],
+ "PlayerStart": {
+  "Location": {
+   "X": -115,
+   "Y": 135,
+   "Z": 100
+  },
+  "YawDeg": 180
+ },
+ "Lights": [
+  {
+   "Type": "Rect",
+   "Name": "WorkLight",
+   "Location": {
+    "X": 55.0,
+    "Y": 45.0,
+    "Z": 185.0
+   },
+   "Target": {
+    "X": 310.0,
+    "Y": 270.0,
+    "Z": 70.0
+   },
+   "Intensity": 3000,
+   "Color": [
+    230,
+    237,
+    255
+   ],
+   "Width": 28,
+   "Height": 20
+  },
+  {
+   "Type": "Point",
+   "Name": "HallSconce",
+   "Location": {
+    "X": -186.0,
+    "Y": 215.0,
+    "Z": 188.0
+   },
+   "Intensity": 180,
+   "Color": [
+    255,
+    214,
+    174
+   ]
+  },
+  {
+   "Type": "Spot",
+   "Name": "StreetLamp",
+   "Location": {
+    "X": 720.0,
+    "Y": 60.0,
+    "Z": 300.0
+   },
+   "Target": {
+    "X": 420.0,
+    "Y": 200.0,
+    "Z": 60.0
+   },
+   "Intensity": 900,
+   "Color": [
+    255,
+    179,
+    106
+   ]
+  }
+ ],
+ "WindowPane": {
+  "Center": {
+   "X": 507.0,
+   "Y": 170.0,
+   "Z": 155.0
+  },
+  "WidthCm": 140,
+  "HeightCm": 130,
+  "Normal": {
+   "X": -1,
+   "Y": 0,
+   "Z": 0
+  }
+ },
+ "Exposure": {
+  "EV100": -1.0
+ }
+}
