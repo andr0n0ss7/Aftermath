@@ -1,5 +1,5 @@
 """
-Aftermath setup — builds the Kitchen 02:14 greybox inside the Unreal Editor (UE 5.4).
+Aftermath setup — builds the Kitchen 02:14 greybox inside the Unreal Editor (UE 5.6).
 
 Run it from the editor: Tools > Execute Python Script... and pick this file
 (or type in the Output Log, Python mode:  import aftermath_setup; aftermath_setup.run()).

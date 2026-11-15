@@ -4,12 +4,12 @@ First-person forensic shooting reconstruction. The player reads bullet defects, 
 cases and firearms left at a scene, runs trajectory strings, places the shooters and files a report that is scored
 against what really happened.
 
-**Engine:** Unreal Engine **5.4.4** (C++), Windows, DirectX 11 by default (DirectX 12 optional).
+**Engine:** Unreal Engine **5.6.1** (C++), Windows, DirectX 11 by default (DirectX 12 optional).
 **Target PC:** 4-core Intel Core i5, 16 GB RAM, 4 GB graphics card (GTX 1650 / GTX 1050 Ti 4 GB / RX 570 4 GB class), 1080p.
 
 ## Quick start
 
-1. Set up the PC once: [Docs/SETUP.md](Docs/SETUP.md) (Visual Studio 2022 with MSVC 14.38, UE 5.4.4, Git + Git LFS).
+1. Set up the PC once: [Docs/SETUP.md](Docs/SETUP.md) (Visual Studio 2022 with MSVC 14.38, UE 5.6.1, Git + Git LFS).
 2. Clone: `git clone https://github.com/andr0n0ss7/aftermath.git C:\Dev\Aftermath`
 3. Right-click `Aftermath.uproject` → **Generate Visual Studio project files** → open `Aftermath.sln` →
    **Development Editor / Win64** → Build.

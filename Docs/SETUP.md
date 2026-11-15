@@ -1,6 +1,6 @@
-# Workstation setup (UE 5.4.4)
+# Workstation setup (UE 5.6.1)
 
-Order: prepare the PC → Visual Studio 2022 → Unreal Engine 5.4.4 → Git → clone this repository → build → open.
+Order: prepare the PC → Visual Studio 2022 → Unreal Engine 5.6.1 → Git → clone this repository → build → open.
 Steps 2 and 3 are the long downloads; run them at the same time.
 
 ## 1. Prepare the PC
@@ -16,19 +16,32 @@ Steps 2 and 3 are the long downloads; run them at the same time.
 
 ## 2. Visual Studio 2022 (Community, free)
 
-UE 5.4 is built for Visual Studio 2022 and the **MSVC 14.38** compiler. Newer MSVC versions are known to break UE 5.4
-builds, so install 14.38 alongside whatever Visual Studio installs by default.
+UE 5.6 prefers Visual Studio 2022 with the **MSVC 14.38** compiler; Epic has not moved past 14.38 for 5.6, and 14.39/14.40
+are banned. Install 14.38 alongside whatever Visual Studio installs by default, then pin it (step 5 below).
 
 1. Install **Visual Studio 2022 Community** (17.8 or later).
 2. Workloads: **Game development with C++** and **Desktop development with C++**.
    Under Game development with C++ also tick **Unreal Engine installer** and a **Windows 10/11 SDK**.
 3. **Individual components** tab → search `14.38` → tick
    **MSVC v143 - VS 2022 C++ x64/x86 build tools (v14.38-17.8)**. Also tick **.NET Framework 4.8 targeting pack**.
-4. Install. UE 5.4 picks 14.38 automatically when it is present.
+4. Install.
+5. Pin the compiler so a newer one is never picked. In PowerShell:
+   ```powershell
+   $dir = "$env:APPDATA\Unreal Engine\UnrealBuildTool"
+   New-Item -ItemType Directory -Force $dir | Out-Null
+   @"
+   <?xml version="1.0" encoding="utf-8" ?>
+   <Configuration xmlns="https://www.unrealengine.com/BuildConfiguration">
+     <WindowsPlatform>
+       <CompilerVersion>14.38.33130</CompilerVersion>
+     </WindowsPlatform>
+   </Configuration>
+   "@ | Set-Content "$dir\BuildConfiguration.xml" -Encoding UTF8
+   ```
 
-## 3. Unreal Engine 5.4.4
+## 3. Unreal Engine 5.6.1
 
-1. Epic Games Launcher → Unreal Engine → Library → **+** → choose **5.4.4** → Install.
+1. Epic Games Launcher → Unreal Engine → Library → **+** → choose **5.6.1** (or the newest 5.6.x) → Install.
 2. Options: Core Components on, Starter Content off, Templates and Feature Packs on, Engine Source off,
    Editor symbols off, Target platforms: Windows only.
 3. Launch it once and close it (first start compiles shaders).
