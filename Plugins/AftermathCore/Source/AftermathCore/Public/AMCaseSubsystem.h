@@ -44,13 +44,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool RecordCondition(AAMEvidenceActor* E);
 	/** Firearms: unload and make safe; reveals magazine, chamber or cylinder contents. */
 	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool MakeSafe(AAMEvidenceActor* E);
-	/** Collects, packages, seals and marks an item. Only after it is marked and photographed in place. */
-	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool Package(AAMEvidenceActor* E);
-	/** Sends a packaged item to the crime lab. Uses one of the case's lab requests. */
-	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool SubmitToLab(AAMEvidenceActor* E);
-	/** Lab report for an item: empty if never submitted, a waiting note if not back yet. */
-	UFUNCTION(BlueprintPure, Category = "Aftermath|Tools") FString GetLabResult(const AAMEvidenceActor* E) const;
-	UPROPERTY(BlueprintReadOnly, Category = "Aftermath") int32 LabRequestsLeft = 0;
 	/** Direction the bullet was travelling when it made this trace (after any ricochet). */
 	FVector ShotDirectionFor(const AAMEvidenceActor* E) const;
 	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") int32 PlaceFigure(FVector FloorPoint, float FacingYawDeg);

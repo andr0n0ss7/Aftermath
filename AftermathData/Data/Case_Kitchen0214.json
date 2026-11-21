@@ -907,7 +907,5 @@
   "ShooterFullCm": 75,
   "ShooterPartialCm": 150,
   "ConvergenceRadiusCm": 32
- },
- "LabRequests": 6,
- "LabTurnaroundSeconds": 45
+ }
 }

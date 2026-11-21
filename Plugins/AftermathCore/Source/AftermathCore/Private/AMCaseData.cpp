@@ -43,8 +43,6 @@ bool UAMCaseData::ImportFromJsonFile(const FString& InPath)
 	Evidence = Parsed.Evidence;
 	SequenceEvidenceIds = Parsed.SequenceEvidenceIds;
 	Swabs = Parsed.Swabs;
-	LabRequests = Parsed.LabRequests;
-	LabTurnaroundSeconds = Parsed.LabTurnaroundSeconds;
 	Tolerances = Parsed.Tolerances;
 	JsonFile.FilePath = InPath;
 

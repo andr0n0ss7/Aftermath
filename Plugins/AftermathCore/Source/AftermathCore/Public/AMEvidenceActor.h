@@ -44,12 +44,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bMadeSafe = false;
 	/** Firearms: made safe before the condition was recorded, so the as-found state is lost. */
 	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bConditionLost = false;
-	/** Collected, packaged, sealed and marked (container marked, never the bullet or case itself). */
-	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bPackaged = false;
-	/** Sent to the crime lab; result available once the world time passes LabReadyTime. */
-	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bSubmittedToLab = false;
-	UPROPERTY(BlueprintReadOnly, Category = "Evidence") double LabReadyTime = 0.0;
-	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bLabResultAnnounced = false;
 
 	UFUNCTION(BlueprintPure, Category = "Evidence") bool IsDocumented() const { return MarkerNumber > 0; }
 	UFUNCTION(BlueprintPure, Category = "Evidence") bool IsInReport() const { return MarkerNumber > 0 && !bExcluded; }
@@ -70,10 +64,6 @@ public:
 	TArray<FString> GetConditionLines() const;
 	/** Firearms: contents found while unloading. */
 	TArray<FString> GetUnloadLines() const;
-	/** Whether this item can be collected and packaged at all (walls and glass stay in place). */
-	bool IsCollectable() const;
-	/** How it is packaged and marked, following field practice for its kind. */
-	FString GetPackagingNote() const;
 
 	/** What the player sees before documenting it. */
 	UFUNCTION(BlueprintPure, Category = "Evidence") FString GetShortLabel() const;

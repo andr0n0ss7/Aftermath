@@ -45,7 +45,6 @@ void UAMCaseSubsystem::StartCase(UAMCaseData* InCase)
 
 	Case = InCase;
 	SwabsLeft = Case->Swabs;
-	LabRequestsLeft = Case->LabRequests;
 
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -185,8 +184,7 @@ bool UAMCaseSubsystem::RecoverProjectile(AAMEvidenceActor* E)
 	if (!E || E->Def.Projectile == EAMProjectile::None) { Say(TEXT("No projectile here.")); return false; }
 	if (E->bProjectileRecovered) { Say(TEXT("Already recovered.")); return false; }
 	E->bProjectileRecovered = true;
-	Say(FString::Printf(TEXT("Section cut out around the bullet and the bullet freed without metal tools, so its rifling marks survive: %s"),
-		*E->GetProjectileDescription()));
+	Say(FString::Printf(TEXT("Projectile recovered: %s"), *E->GetProjectileDescription()));
 	Changed();
 	return true;
 }
@@ -330,17 +328,6 @@ bool UAMCaseSubsystem::RemoveFigure(int32 Number)
 void UAMCaseSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (!Case) { return; }
-	const double Now = GetWorld()->GetTimeSeconds();
-	for (AAMEvidenceActor* E : Evidence)
-	{
-		if (E && E->bSubmittedToLab && !E->bLabResultAnnounced && Now >= E->LabReadyTime)
-		{
-			E->bLabResultAnnounced = true;
-			Say(FString::Printf(TEXT("Lab report back for #%d."), E->MarkerNumber));
-			Changed();
-		}
-	}
 	DrawOverlays();
 }
 
@@ -652,8 +639,6 @@ FString UAMCaseSubsystem::BuildReportText() const
 		if (E->bEdgeExamined) { L += TEXT(" | edge examined"); }
 		if (E->bRodPlaced) { L += TEXT(" | rod"); }
 		if (E->bProjectileRecovered) { L += TEXT(" | projectile"); }
-		if (E->bPackaged) { L += TEXT(" | packaged"); }
-		if (E->bSubmittedToLab) { L += GetWorld()->GetTimeSeconds() >= E->LabReadyTime ? TEXT(" | lab report") : TEXT(" | at lab"); }
 		if (E->IsWeapon())
 		{
 			L += E->bConditionRecorded ? TEXT(" | condition recorded") : (E->bConditionLost ? TEXT(" | condition LOST") : TEXT(""));
@@ -679,123 +664,4 @@ FString UAMCaseSubsystem::BuildReportText() const
 		Claims.FirstShooter.IsEmpty() ? TEXT("-") : *Claims.FirstShooter,
 		Claims.StatementVerdict.IsEmpty() ? TEXT("-") : *Claims.StatementVerdict));
 	return FString::Join(Lines, TEXT("\n"));
-}
-
-// ---------------- Packaging and the crime lab ----------------
-
-bool UAMCaseSubsystem::Package(AAMEvidenceActor* E)
-{
-	if (!E) { return false; }
-	if (!E->IsDocumented())
-	{
-		Say(TEXT("Photograph and mark it where it lies first. Nothing is moved before it is documented."));
-		return false;
-	}
-	if (E->bPackaged) { Say(TEXT("Already packaged and sealed.")); return false; }
-	if (E->IsWeapon() && !E->bMadeSafe)
-	{
-		Say(TEXT("Unload it and make it safe first. A loaded firearm is never packaged."));
-		return false;
-	}
-	if (!E->IsCollectable())
-	{
-		Say(E->Def.Projectile != EAMProjectile::None
-			? TEXT("Recover the bullet first (cut out the section around it; never pry it out with metal tools).")
-			: TEXT("This stays in place: it is recorded by photographs, measurements and the sketch."));
-		return false;
-	}
-	E->bPackaged = true;
-	Say(E->GetPackagingNote());
-	Changed();
-	return true;
-}
-
-bool UAMCaseSubsystem::SubmitToLab(AAMEvidenceActor* E)
-{
-	if (!E) { return false; }
-	if (!E->bPackaged) { Say(TEXT("Only packaged, sealed items go to the lab.")); return false; }
-	if (E->bSubmittedToLab) { Say(TEXT("Already at the lab.")); return false; }
-	if (LabRequestsLeft <= 0) { Say(TEXT("No lab requests left for this case.")); return false; }
-	--LabRequestsLeft;
-	E->bSubmittedToLab = true;
-	E->LabReadyTime = GetWorld()->GetTimeSeconds() + (Case ? Case->LabTurnaroundSeconds : 45.f);
-	Say(FString::Printf(TEXT("#%d sent to the lab. Report in about %.0f seconds."), E->MarkerNumber, Case ? Case->LabTurnaroundSeconds : 45.f));
-	Changed();
-	return true;
-}
-
-FString UAMCaseSubsystem::GetLabResult(const AAMEvidenceActor* E) const
-{
-	if (!E || !E->bSubmittedToLab || !Case) { return FString(); }
-	const double Now = GetWorld()->GetTimeSeconds();
-	if (Now < E->LabReadyTime)
-	{
-		return FString::Printf(TEXT("At the lab, report in %.0f s."), E->LabReadyTime - Now);
-	}
-
-	// Weapons whose test-fired standards are back from the lab, by weapon key.
-	TMap<FString, const AAMEvidenceActor*> Standards;
-	for (const AAMEvidenceActor* W : Evidence)
-	{
-		if (W && W->IsWeapon() && W->bSubmittedToLab && Now >= W->LabReadyTime)
-		{
-			Standards.Add(W->Def.Weapon.WeaponKey, W);
-		}
-	}
-	auto WeaponKeyForShot = [this](const FString& ShotId) -> FString
-	{
-		const FAMShot* Shot = Case->FindShot(ShotId);
-		const FAMShooter* Shooter = Shot ? Case->FindShooter(Shot->Shooter) : nullptr;
-		return Shooter ? Shooter->WeaponKey : FString();
-	};
-	auto Comparison = [&Standards](const FString& Key, const TCHAR* What) -> FString
-	{
-		if (const AAMEvidenceActor* const* W = Standards.Find(Key))
-		{
-			return FString::Printf(TEXT(" Compared with test shots: %s identified as fired in %s #%d."), What,
-				*(*W)->GetShortLabel().ToLower(), (*W)->MarkerNumber);
-		}
-		return Standards.Num()
-			? FString::Printf(TEXT(" Compared with test shots: %s not fired in any weapon submitted so far."), What)
-			: FString(TEXT(" No weapon submitted yet to compare against."));
-	};
-
-	switch (E->Def.Kind)
-	{
-	case EAMEvidenceKind::Pistol:
-	case EAMEvidenceKind::Revolver:
-		return FString::Printf(TEXT("Function test: %s fires normally; safeties and trigger work as designed, so an accidental "
-			"discharge is not supported. Test shots fired and kept as comparison standards for %s."),
-			*E->Def.Weapon.Description, *E->Def.Weapon.WeaponKey);
-	case EAMEvidenceKind::CartridgeCase:
-	{
-		// Cases at the scene come from the pistol; key from the case's caliber.
-		return FString(TEXT("9 mm Luger case; firing-pin, extractor and ejector marks recorded.")) + Comparison(TEXT("9mm"), TEXT("case"));
-	}
-	case EAMEvidenceKind::OldRimfireCase:
-		return TEXT(".22 rimfire case, heavily corroded under the surface dirt: it was fired long before tonight. "
-			"Its firing-pin mark does not match any weapon at the scene.");
-	case EAMEvidenceKind::Clock:
-		return TEXT("No bullet damage. The movement stopped when the clock hit the floor; the time shown is when it fell, not when any shot was fired.");
-	default:
-		break;
-	}
-
-	if (E->Def.Projectile != EAMProjectile::None)
-	{
-		FString Class;
-		switch (E->Def.Projectile)
-		{
-		case EAMProjectile::Luger9mmFMJ:
-			Class = TEXT("9 mm full metal jacket bullet; six lands and grooves, right twist."); break;
-		case EAMProjectile::Special38LRN:
-			Class = TEXT(".38 Special plain lead bullet; five lands and grooves, right twist."); break;
-		case EAMProjectile::Special38LRNDeformed:
-			Class = TEXT(".38 Special plain lead bullet, flattened on one side with stone particles embedded (ricochet); "
-				"five lands and grooves, right twist, still readable on the undamaged side."); break;
-		default: break;
-		}
-		return Class + Comparison(WeaponKeyForShot(E->Def.ShotId), TEXT("bullet"));
-	}
-	return TEXT("Nothing the lab can add.");
 }
