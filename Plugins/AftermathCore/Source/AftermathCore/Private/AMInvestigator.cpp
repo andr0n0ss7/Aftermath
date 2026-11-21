@@ -95,6 +95,7 @@ void AAMInvestigator::BuildInput()
 		{"IA_Document", EKeys::One}, {"IA_Measure", EKeys::Two}, {"IA_Lead", EKeys::Three}, {"IA_Copper", EKeys::Four},
 		{"IA_Rod", EKeys::Five}, {"IA_Recover", EKeys::Six}, {"IA_String", EKeys::Seven}, {"IA_Exclude", EKeys::X},
 		{"IA_Call", EKeys::Eight}, {"IA_Examine", EKeys::Nine}, {"IA_MakeSafe", EKeys::Zero},
+		{"IA_Package", EKeys::P}, {"IA_Lab", EKeys::L},
 		{"IA_Figure", EKeys::G}, {"IA_Report", EKeys::Tab}, {"IA_Submit", EKeys::Enter}
 	};
 	for (const TPair<FName, FKey>& B : Buttons)
@@ -133,6 +134,8 @@ void AAMInvestigator::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	EIC->BindAction(Actions["IA_Call"], ETriggerEvent::Started, this, &AAMInvestigator::ToolCall);
 	EIC->BindAction(Actions["IA_Examine"], ETriggerEvent::Started, this, &AAMInvestigator::ToolExamine);
 	EIC->BindAction(Actions["IA_MakeSafe"], ETriggerEvent::Started, this, &AAMInvestigator::ToolMakeSafe);
+	EIC->BindAction(Actions["IA_Package"], ETriggerEvent::Started, this, &AAMInvestigator::ToolPackage);
+	EIC->BindAction(Actions["IA_Lab"], ETriggerEvent::Started, this, &AAMInvestigator::ToolLab);
 	EIC->BindAction(Actions["IA_Figure"], ETriggerEvent::Started, this, &AAMInvestigator::ToolFigure);
 	EIC->BindAction(Actions["IA_Report"], ETriggerEvent::Started, this, &AAMInvestigator::ToggleReport);
 	EIC->BindAction(Actions["IA_Submit"], ETriggerEvent::Started, this, &AAMInvestigator::Submit);
@@ -241,6 +244,8 @@ void AAMInvestigator::ToolString()   { if (RequireSelected()) { GetCase()->RunSt
 void AAMInvestigator::ToolExclude()  { if (RequireSelected()) { GetCase()->ToggleExcluded(Selected); } }
 void AAMInvestigator::ToolCall()     { if (RequireSelected()) { GetCase()->CycleCall(Selected); } }
 void AAMInvestigator::ToolMakeSafe() { if (RequireSelected()) { GetCase()->MakeSafe(Selected); } }
+void AAMInvestigator::ToolPackage()  { if (RequireSelected()) { GetCase()->Package(Selected); } }
+void AAMInvestigator::ToolLab()      { if (RequireSelected()) { GetCase()->SubmitToLab(Selected); } }
 
 void AAMInvestigator::ToolExamine()
 {

@@ -261,9 +261,32 @@ FString AAMEvidenceActor::GetEdgeFinding(const FVector& ShotDirection) const
 	const bool bFromNear = FVector::DotProduct(ShotDirection, Def.Normal) < 0.f;
 	const FString ExitFace = bFromNear ? Def.FarSideLabel : Def.NearSideLabel;
 	const FString EntryFace = bFromNear ? Def.NearSideLabel : Def.FarSideLabel;
-	return FString::Printf(TEXT("Small, sharp-edged opening on the face toward %s. On the face toward %s the hole opens into a "
-		"shallow cone: flakes are missing and the edge is bevelled. Radial cracks on that face show conchoidal ridges."),
-		*EntryFace, *ExitFace);
+	FString Finding = FString::Printf(TEXT("Small, sharp-edged opening on the face toward %s. On the face toward %s the hole opens into a "
+		"shallow cone: flakes are missing and the edge is bevelled."), *EntryFace, *ExitFace);
+
+	// Side-to-side angle from the exit crater: little chipping on the side the bullet came from, heavy chipping opposite;
+	// at the entry, short straight radial cracks on that side, one or two long ones opposite.
+	const FVector EntryNormal = bFromNear ? Def.Normal : -Def.Normal;          // points toward the entry side
+	const FVector Facing = (-EntryNormal * FVector(1.f, 1.f, 0.f)).GetSafeNormal(); // viewer on the entry side, facing the glass
+	const FVector ViewerRight(-Facing.Y, Facing.X, 0.f);
+	const float Sideways = FVector::DotProduct(ShotDirection.GetSafeNormal(), ViewerRight);
+	const float SideAngleDeg = FMath::RadiansToDegrees(FMath::Asin(FMath::Abs(Sideways)));
+	if (SideAngleDeg < 5.f)
+	{
+		Finding += TEXT(" Chipping around the exit crater is even all round: the bullet struck almost straight on, side to side.");
+	}
+	else
+	{
+		// Moving toward the viewer's right means it came in from the left, and vice versa.
+		const TCHAR* From = Sideways > 0.f ? TEXT("left") : TEXT("right");
+		const TCHAR* Other = Sideways > 0.f ? TEXT("right") : TEXT("left");
+		Finding += FString::Printf(TEXT(" Seen from %s, the exit crater is barely chipped on the %s and heavily chipped on the %s; "
+			"at the entry, the radial cracks are short and straight on the %s and long on the %s. The bullet came in from the %s, "
+			"%s."), *EntryFace, From, Other, From, Other, From,
+			SideAngleDeg > 30.f ? TEXT("at a steep sideways angle") : TEXT("at a moderate sideways angle"));
+	}
+	Finding += TEXT(" Where this hole's cracks run into the other hole's cracks, they stop: whichever crack stops at the other was made later.");
+	return Finding;
 }
 
 TArray<FString> AAMEvidenceActor::GetConditionLines() const
@@ -273,6 +296,10 @@ TArray<FString> AAMEvidenceActor::GetConditionLines() const
 	L.Add(W.Description);
 	L.Add(TEXT("Action: ") + W.Action);
 	L.Add(TEXT("Safety: ") + W.Safety);
+	if (Def.Kind == EAMEvidenceKind::Revolver)
+	{
+		L.Add(TEXT("Arrow scratched on the cylinder at the chamber under the firing pin; cylinder diagram started."));
+	}
 	if (W.bHasMagazine)
 	{
 		L.Add(W.bMagazineSeated ? TEXT("Magazine: seated in the grip") : TEXT("Magazine: not inserted"));
@@ -284,7 +311,15 @@ TArray<FString> AAMEvidenceActor::GetUnloadLines() const
 {
 	const FAMWeaponState& W = Def.Weapon;
 	TArray<FString> L;
-	if (Def.Kind == EAMEvidenceKind::Revolver)
+	if (Def.Kind == EAMEvidenceKind::Revolver && bConditionLost)
+	{
+		// Without the arrow at the chamber under the firing pin, the diagram can't relate chambers to the firing order.
+		int32 Fired = 0;
+		for (const FString& C : W.CylinderChambers) { if (C.Contains(TEXT("Fired"))) { ++Fired; } }
+		L.Add(FString::Printf(TEXT("Cylinder opened: %d fired cases, %d live rounds."), Fired, W.CylinderChambers.Num() - Fired));
+		L.Add(TEXT("The chamber under the firing pin was not marked first, so the order of the chambers is lost."));
+	}
+	else if (Def.Kind == EAMEvidenceKind::Revolver)
 	{
 		L.Add(TEXT("Cylinder opened. ") + W.CylinderNote);
 		for (int32 i = 0; i < W.CylinderChambers.Num(); ++i)
@@ -463,5 +498,39 @@ void AAMEvidenceActor::ShowMadeSafe()
 		// Magazine out, laid beside the pistol.
 		Part->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 		Part->SetWorldLocation(Def.Position + Def.SurfaceUp * 14.f);
+	}
+}
+
+bool AAMEvidenceActor::IsCollectable() const
+{
+	switch (Def.Kind)
+	{
+	case EAMEvidenceKind::CartridgeCase:
+	case EAMEvidenceKind::OldRimfireCase:
+	case EAMEvidenceKind::Pistol:
+	case EAMEvidenceKind::Revolver:
+	case EAMEvidenceKind::Clock:
+		return true;
+	default:
+		// A recovered projectile is collected; the wall or panel it came from stays.
+		return Def.Projectile != EAMProjectile::None && bProjectileRecovered;
+	}
+}
+
+FString AAMEvidenceActor::GetPackagingNote() const
+{
+	switch (Def.Kind)
+	{
+	case EAMEvidenceKind::CartridgeCase:
+	case EAMEvidenceKind::OldRimfireCase:
+		return TEXT("Case placed in a padded container and sealed with paper tape. The container is marked across the tape; the case itself is never marked.");
+	case EAMEvidenceKind::Pistol:
+		return TEXT("Pistol tagged and marked on the right side of the frame, on the slide and on the barrel; magazine marked on its base. Wrapped clean, not cleaned.");
+	case EAMEvidenceKind::Revolver:
+		return TEXT("Revolver tagged and marked on the frame, cylinder and barrel; cylinder diagram attached. Wrapped clean, not cleaned.");
+	case EAMEvidenceKind::Clock:
+		return TEXT("Clock bagged as found.");
+	default:
+		return TEXT("Bullet placed in a cotton-padded vial and sealed with paper tape. The vial is marked; the bullet itself is never marked.");
 	}
 }

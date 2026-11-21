@@ -137,8 +137,8 @@ void AAMDebugHUD::DrawHUD()
 	{
 		Line(FString::Printf(TEXT("CASE %s  %s"), *Sub->Case->CaseId, *Sub->Case->Title.ToString()), 20.f, Y, AMHud::Marker);
 	}
-	Line(FString::Printf(TEXT("Swabs %d   Documented %d   Strings %d   Figures %d   %s"),
-		Sub->SwabsLeft, Sub->CountDocumented(), Sub->Strings.Num(), Sub->Figures.Num(),
+	Line(FString::Printf(TEXT("Swabs %d   Lab requests %d   Documented %d   Strings %d   Figures %d   %s"),
+		Sub->SwabsLeft, Sub->LabRequestsLeft, Sub->CountDocumented(), Sub->Strings.Num(), Sub->Figures.Num(),
 		Sub->bAssisted ? TEXT("Assisted") : TEXT("Expert")), 20.f, Y, AMHud::Quiet);
 
 	// Selected trace panel.
@@ -174,8 +174,11 @@ void AAMDebugHUD::DrawHUD()
 			else if (E->bConditionLost) { Line(TEXT("As-found condition LOST (handled before recording)"), PX, PY, AMHud::Marker); }
 			if (E->bMadeSafe) { for (const FString& L : E->GetUnloadLines()) { WrapLines(L, PX, PY, AMHud::Ink); } }
 		}
+		if (E->bPackaged) { Line(TEXT("Packaged and sealed"), PX, PY, AMHud::Ink); }
+		const FString Lab = Sub->GetLabResult(E);
+		if (!Lab.IsEmpty()) { WrapLines(TEXT("Lab  ") + Lab, PX, PY, AMHud::Ink); }
 		PY += 6.f;
-		Line(TEXT("[1] Mark  [X] Exclude from report"), PX, PY, AMHud::Marker);
+		Line(TEXT("[1] Mark  [P] Package  [L] Send to lab  [X] Exclude"), PX, PY, AMHud::Marker);
 		if (E->IsWeapon())
 		{
 			Line(TEXT("[9] Record condition as found  [0] Unload and make safe"), PX, PY, AMHud::Marker);

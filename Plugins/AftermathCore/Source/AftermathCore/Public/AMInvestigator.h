@@ -71,6 +71,8 @@ private:
 	void ToolCall();
 	void ToolExamine();
 	void ToolMakeSafe();
+	void ToolPackage();
+	void ToolLab();
 	void ToolFigure();
 	void ToggleReport();
 	void Submit();

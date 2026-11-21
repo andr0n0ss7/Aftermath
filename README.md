@@ -44,6 +44,8 @@ against what really happened.
 | 8 | Call a defect: entry / exit / ricochet / not a bullet (glass: which side the shot came from) |
 | 9 | Glass: examine the edge. Firearm: record its condition as found, hands off |
 | 0 | Firearm: unload and make safe (do 9 first) |
+| P | Package and seal a collected item (cases, recovered bullets, firearms after making safe) |
+| L | Send a packaged item to the crime lab (limited requests; the report comes back after a short wait) |
 | X | Leave a marked item out of the report |
 | G | Place a shooter figure |
 | Tab, Enter | Report, submit |
@@ -57,3 +59,4 @@ Claims go in the console (`~`) until the case board UI exists: `AMShots 5`, `AMW
 - [Docs/PERFORMANCE_BUDGETS.md](Docs/PERFORMANCE_BUDGETS.md): what the low-end target allows
 - [Docs/LEVEL_DESIGN.md](Docs/LEVEL_DESIGN.md): how big and how detailed a scene may be, and the surface material list
 - [Docs/FIREARMS_PIPELINE.md](Docs/FIREARMS_PIPELINE.md): bringing real-world firearm models in
+- [Docs/PROCEDURES.md](Docs/PROCEDURES.md): which field procedures (FM 19-20, Part Three) the game uses and how
