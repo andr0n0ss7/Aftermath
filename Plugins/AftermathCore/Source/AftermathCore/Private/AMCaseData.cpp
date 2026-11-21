@@ -43,6 +43,11 @@ bool UAMCaseData::ImportFromJsonFile(const FString& InPath)
 	Evidence = Parsed.Evidence;
 	SequenceEvidenceIds = Parsed.SequenceEvidenceIds;
 	Swabs = Parsed.Swabs;
+	LabRequests = Parsed.LabRequests;
+	LabTurnaroundSeconds = Parsed.LabTurnaroundSeconds;
+	SceneDate = Parsed.SceneDate;
+	if (!Parsed.ArrivalTime.IsEmpty()) { ArrivalTime = Parsed.ArrivalTime; }
+	if (!Parsed.InvestigatorName.IsEmpty()) { InvestigatorName = Parsed.InvestigatorName; }
 	Tolerances = Parsed.Tolerances;
 	JsonFile.FilePath = InPath;
 

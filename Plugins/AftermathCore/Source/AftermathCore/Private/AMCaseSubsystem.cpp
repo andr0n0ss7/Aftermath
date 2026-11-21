@@ -45,6 +45,8 @@ void UAMCaseSubsystem::StartCase(UAMCaseData* InCase)
 
 	Case = InCase;
 	SwabsLeft = Case->Swabs;
+	LabRequestsLeft = Case->LabRequests;
+	LastTagTime = -100.0;
 
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -184,7 +186,7 @@ bool UAMCaseSubsystem::RecoverProjectile(AAMEvidenceActor* E)
 	if (!E || E->Def.Projectile == EAMProjectile::None) { Say(TEXT("No projectile here.")); return false; }
 	if (E->bProjectileRecovered) { Say(TEXT("Already recovered.")); return false; }
 	E->bProjectileRecovered = true;
-	Say(FString::Printf(TEXT("Projectile recovered: %s"), *E->GetProjectileDescription()));
+	Say(FString::Printf(TEXT("Bullet dug out with a knife: %s"), *E->GetProjectileDescription()));
 	Changed();
 	return true;
 }
@@ -328,6 +330,17 @@ bool UAMCaseSubsystem::RemoveFigure(int32 Number)
 void UAMCaseSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!Case) { return; }
+	const double Now = GetWorld()->GetTimeSeconds();
+	for (AAMEvidenceActor* E : Evidence)
+	{
+		if (E && E->bSubmittedToLab && !E->bLabResultAnnounced && Now >= E->LabReadyTime)
+		{
+			E->bLabResultAnnounced = true;
+			Say(FString::Printf(TEXT("Phone: the lab has a report on #%d."), E->MarkerNumber));
+			Changed();
+		}
+	}
 	DrawOverlays();
 }
 
@@ -443,16 +456,9 @@ bool UAMCaseSubsystem::ExamineEdge(AAMEvidenceActor* E)
 bool UAMCaseSubsystem::RecordCondition(AAMEvidenceActor* E)
 {
 	if (!E || !E->IsWeapon()) { Say(TEXT("Recording condition is for firearms.")); return false; }
-	if (E->bConditionRecorded) { Say(TEXT("Condition already recorded.")); return false; }
-	if (E->bMadeSafe)
-	{
-		E->bConditionLost = true;
-		Say(TEXT("Too late: the weapon has already been handled. Its as-found condition can no longer be recorded."));
-		Changed();
-		return false;
-	}
+	if (E->bConditionRecorded) { Say(TEXT("Condition already noted.")); return false; }
 	E->bConditionRecorded = true;
-	Say(TEXT("Condition recorded and photographed as found, without touching the weapon."));
+	Say(TEXT("Condition noted and photographed as found."));
 	Changed();
 	return true;
 }
@@ -461,17 +467,11 @@ bool UAMCaseSubsystem::MakeSafe(AAMEvidenceActor* E)
 {
 	if (!E || !E->IsWeapon()) { Say(TEXT("Only firearms are made safe.")); return false; }
 	if (E->bMadeSafe) { Say(TEXT("Already unloaded and made safe.")); return false; }
+	// Unloading always notes the visible condition first: no information is lost by doing things in another order.
+	E->bConditionRecorded = true;
 	E->bMadeSafe = true;
 	E->ShowMadeSafe();
-	if (!E->bConditionRecorded)
-	{
-		E->bConditionLost = true;
-		Say(TEXT("Made safe, but the condition was not recorded first: safety and action positions as found are lost."));
-	}
-	else
-	{
-		Say(TEXT("Unloaded and made safe. Contents logged."));
-	}
+	Say(TEXT("Unloaded. Contents noted."));
 	Changed();
 	return true;
 }
@@ -490,14 +490,11 @@ FAMScoreResult UAMCaseSubsystem::SubmitReport()
 		R.Total += Points;
 	};
 
-	TArray<AAMEvidenceActor*> Weapons;
-	for (AAMEvidenceActor* E : Evidence) { if (E && E->IsWeapon()) { Weapons.Add(E); } }
-	// Weights sum to 100. A case without firearms at the scene moves the handling points to evidence.
-	const int32 HandlingMax = Weapons.Num() ? 8 : 0;
-	const int32 EvidenceMax = 20 + (8 - HandlingMax);
+	// Weights sum to 100.
+	const int32 EvidenceMax = 28;
 
-	// Evidence coverage and decoys (-6 each).
-	int32 Genuine = 0, InReport = 0;
+	// Evidence coverage, and decoys (-6 each) in cases that have any.
+	int32 Genuine = 0, InReport = 0, DecoysInCase = 0;
 	TArray<FString> DecoysIn;
 	for (const AAMEvidenceActor* E : Evidence)
 	{
@@ -507,14 +504,21 @@ FAMScoreResult UAMCaseSubsystem::SubmitReport()
 			++Genuine;
 			if (E->IsInReport()) { ++InReport; }
 		}
-		else if (E->Def.Role == EAMEvidenceRole::Decoy && E->IsInReport())
+		else if (E->Def.Role == EAMEvidenceRole::Decoy)
 		{
-			DecoysIn.Add(FString::Printf(TEXT("#%d %s"), E->MarkerNumber, *E->GetShortLabel().ToLower()));
+			++DecoysInCase;
+			if (E->IsInReport())
+			{
+				DecoysIn.Add(FString::Printf(TEXT("#%d %s"), E->MarkerNumber, *E->GetShortLabel().ToLower()));
+			}
 		}
 	}
 	Add(TEXT("Evidence documented"), FString::Printf(TEXT("%d of %d genuine traces in the report"), InReport, Genuine),
 		Genuine ? FMath::RoundToInt(float(EvidenceMax) * InReport / Genuine) : 0, EvidenceMax);
-	Add(TEXT("Misleading items"), DecoysIn.Num() ? FString::Join(DecoysIn, TEXT("; ")) : TEXT("None in the report"), -6 * DecoysIn.Num(), 0);
+	if (DecoysInCase > 0)
+	{
+		Add(TEXT("Misleading items"), DecoysIn.Num() ? FString::Join(DecoysIn, TEXT("; ")) : TEXT("None in the report"), -6 * DecoysIn.Num(), 0);
+	}
 
 	// Entry / exit / ricochet calls (10): every bullet-related surface trace, plus any decoy the player documented.
 	int32 Callable = 0, Correct = 0;
@@ -535,23 +539,6 @@ FAMScoreResult UAMCaseSubsystem::SubmitReport()
 	Add(TEXT("Entry, exit and ricochet calls"),
 		FString::Printf(TEXT("%d of %d right%s%s"), Correct, Callable, Wrong.Num() ? TEXT("; wrong: ") : TEXT(""), *FString::Join(Wrong, TEXT(", "))),
 		Callable ? FMath::RoundToInt(10.f * Correct / Callable) : 0, 10);
-
-	// Firearm handling (8): condition recorded before making safe, then made safe.
-	if (Weapons.Num())
-	{
-		float Points = 0.f;
-		TArray<FString> Notes;
-		const float Each = 8.f / Weapons.Num();
-		for (const AAMEvidenceActor* W : Weapons)
-		{
-			const bool bProper = W->bConditionRecorded && W->bMadeSafe;
-			Points += bProper ? Each : (W->bConditionRecorded ? Each * 0.5f : (W->bMadeSafe ? Each * 0.25f : 0.f));
-			Notes.Add(FString::Printf(TEXT("%s: %s"), *W->GetShortLabel().ToLower(),
-				bProper ? TEXT("recorded, then made safe") : W->bConditionLost ? TEXT("handled before recording") :
-				W->bConditionRecorded ? TEXT("recorded, never made safe") : TEXT("untouched")));
-		}
-		Add(TEXT("Firearm handling"), FString::Join(Notes, TEXT("; ")), FMath::RoundToInt(Points), 8);
-	}
 
 	// Shooter positions (10 each).
 	const FAMTolerances& Tol = Case->Tolerances;
@@ -638,11 +625,12 @@ FString UAMCaseSubsystem::BuildReportText() const
 		if (E->CopperResult != EAMTestResult::NotTested) { L += E->CopperResult == EAMTestResult::Negative ? TEXT(" | Cu-") : TEXT(" | Cu+"); }
 		if (E->bEdgeExamined) { L += TEXT(" | edge examined"); }
 		if (E->bRodPlaced) { L += TEXT(" | rod"); }
-		if (E->bProjectileRecovered) { L += TEXT(" | projectile"); }
+		if (E->bProjectileRecovered) { L += TEXT(" | bullet recovered"); }
+		if (E->bCollected) { L += TEXT(" | collected"); }
+		if (E->bSubmittedToLab) { L += GetWorld()->GetTimeSeconds() >= E->LabReadyTime ? TEXT(" | lab report") : TEXT(" | at lab"); }
 		if (E->IsWeapon())
 		{
-			L += E->bConditionRecorded ? TEXT(" | condition recorded") : (E->bConditionLost ? TEXT(" | condition LOST") : TEXT(""));
-			L += E->bMadeSafe ? TEXT(" | made safe") : TEXT(" | NOT made safe");
+			L += E->bMadeSafe ? TEXT(" | unloaded") : (E->bConditionRecorded ? TEXT(" | condition noted") : TEXT(""));
 		}
 		Lines.Add(L);
 	}
@@ -664,4 +652,139 @@ FString UAMCaseSubsystem::BuildReportText() const
 		Claims.FirstShooter.IsEmpty() ? TEXT("-") : *Claims.FirstShooter,
 		Claims.StatementVerdict.IsEmpty() ? TEXT("-") : *Claims.StatementVerdict));
 	return FString::Join(Lines, TEXT("\n"));
+}
+
+// ---------------- Collecting, tags and the crime lab ----------------
+
+bool UAMCaseSubsystem::Collect(AAMEvidenceActor* E)
+{
+	if (!E) { return false; }
+	if (E->bCollected) { Say(TEXT("Already bagged.")); return false; }
+	if (!E->IsDocumented()) { Say(TEXT("Mark it first (1).")); return false; }
+	if (!E->IsCollectable())
+	{
+		Say(E->Def.Projectile != EAMProjectile::None ? TEXT("Dig the bullet out first (6).") : TEXT("This stays where it is."));
+		return false;
+	}
+	if (E->IsWeapon() && !E->bMadeSafe)
+	{
+		MakeSafe(E);
+	}
+	E->ShowCollected();
+
+	// Tag: case, item, description, where, when, who. Time counts on from arrival at the scene.
+	int32 Hours = 3, Minutes = 0;
+	FString HStr, MStr;
+	if (Case->ArrivalTime.Split(TEXT(":"), &HStr, &MStr))
+	{
+		Hours = FCString::Atoi(*HStr);
+		Minutes = FCString::Atoi(*MStr);
+	}
+	const int32 Total = Hours * 60 + Minutes + FMath::FloorToInt(GetWorld()->GetTimeSeconds() / 60.0);
+	LastTag.CaseNumber = Case->CaseId;
+	LastTag.ItemNumber = E->MarkerNumber;
+	LastTag.Description = E->GetTagDescription();
+	LastTag.Location = E->Def.Location;
+	LastTag.DateTime = FString::Printf(TEXT("%s  %02d:%02d"), *Case->SceneDate, (Total / 60) % 24, Total % 60);
+	LastTag.CollectedBy = Case->InvestigatorName;
+	LastTagTime = GetWorld()->GetTimeSeconds();
+
+	Say(FString::Printf(TEXT("#%d bagged and tagged."), E->MarkerNumber));
+	Changed();
+	return true;
+}
+
+bool UAMCaseSubsystem::SubmitToLab(AAMEvidenceActor* E)
+{
+	if (!E) { return false; }
+	if (!E->bCollected) { Say(TEXT("Bag it first (P).")); return false; }
+	if (E->bSubmittedToLab) { Say(TEXT("Already at the lab.")); return false; }
+	if (LabRequestsLeft <= 0) { Say(TEXT("No lab requests left for this case.")); return false; }
+	--LabRequestsLeft;
+	E->bSubmittedToLab = true;
+	E->LabReadyTime = GetWorld()->GetTimeSeconds() + Case->LabTurnaroundSeconds;
+	Say(FString::Printf(TEXT("#%d sent to the lab."), E->MarkerNumber));
+	Changed();
+	return true;
+}
+
+FString UAMCaseSubsystem::GetLabResult(const AAMEvidenceActor* E) const
+{
+	if (!E || !E->bSubmittedToLab || !Case) { return FString(); }
+	const double Now = GetWorld()->GetTimeSeconds();
+	if (Now < E->LabReadyTime)
+	{
+		return FString::Printf(TEXT("At the lab, report in %.0f s."), E->LabReadyTime - Now);
+	}
+
+	// Firearms whose test shots are back, by weapon key: bullets and cases are only compared against these.
+	TMap<FString, const AAMEvidenceActor*> Standards;
+	for (const AAMEvidenceActor* W : Evidence)
+	{
+		if (W && W->IsWeapon() && W->bSubmittedToLab && Now >= W->LabReadyTime)
+		{
+			Standards.Add(W->Def.Weapon.WeaponKey, W);
+		}
+	}
+	auto Compare = [&Standards](const FString& Key, const TCHAR* What) -> FString
+	{
+		if (const AAMEvidenceActor* const* W = Standards.Find(Key))
+		{
+			return FString::Printf(TEXT(" Matches the test shots from #%d: this %s was fired in that %s."),
+				(*W)->MarkerNumber, What, *(*W)->GetShortLabel().ToLower());
+		}
+		if (Standards.Num())
+		{
+			return FString(TEXT(" Does not match the test shots from any firearm sent so far."));
+		}
+		return FString(TEXT(" Send a firearm to compare it against."));
+	};
+
+	switch (E->Def.Kind)
+	{
+	case EAMEvidenceKind::Pistol:
+	case EAMEvidenceKind::Revolver:
+		return FString::Printf(TEXT("%s. Fires normally; trigger and safeties work as designed. Test shots fired and kept for comparison."),
+			*E->Def.Weapon.Description);
+	case EAMEvidenceKind::CartridgeCase:
+		return FString(TEXT("9 mm Luger case; firing-pin and ejector marks recorded.")) + Compare(TEXT("9mm"), TEXT("case"));
+	case EAMEvidenceKind::Clock:
+		return TEXT("No bullet damage. The movement stopped when the clock hit the floor.");
+	default:
+		break;
+	}
+
+	if (E->Def.Projectile != EAMProjectile::None)
+	{
+		const FAMShot* Shot = Case->FindShot(E->Def.ShotId);
+		const FAMShooter* Shooter = Shot ? Case->FindShooter(Shot->Shooter) : nullptr;
+		FString Class;
+		switch (E->Def.Projectile)
+		{
+		case EAMProjectile::Luger9mmFMJ:          Class = TEXT("9 mm full metal jacket bullet; six lands and grooves, right twist."); break;
+		case EAMProjectile::Special38LRN:         Class = TEXT(".38 Special lead bullet; five lands and grooves, right twist."); break;
+		case EAMProjectile::Special38LRNDeformed: Class = TEXT(".38 Special lead bullet, flattened on one side with stone grit embedded; "
+			"five lands and grooves, right twist, readable on the undamaged side."); break;
+		default: break;
+		}
+		return Class + Compare(Shooter ? Shooter->WeaponKey : FString(), TEXT("bullet"));
+	}
+	return TEXT("Nothing the lab can add.");
+}
+
+FString UAMCaseSubsystem::DescribeGlassEdge(const AAMEvidenceActor* E) const
+{
+	if (!E || !Case) { return FString(); }
+	const FAMShot* Mine = Case->FindShot(E->Def.ShotId);
+	int32 Relation = 0;
+	for (const AAMEvidenceActor* Other : Evidence)
+	{
+		if (!Other || Other == E || Other->Def.Kind != EAMEvidenceKind::GlassHole) { continue; }
+		const FAMShot* Theirs = Case->FindShot(Other->Def.ShotId);
+		if (Mine && Theirs && FVector::Dist(Other->Def.Position, E->Def.Position) < 150.f)
+		{
+			Relation = Theirs->Order < Mine->Order ? 1 : -1;
+		}
+	}
+	return E->GetEdgeFinding(ShotDirectionFor(E), Relation);
 }

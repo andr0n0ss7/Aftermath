@@ -42,8 +42,12 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bConditionRecorded = false;
 	/** Firearms: unloaded and made safe; contents now known. */
 	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bMadeSafe = false;
-	/** Firearms: made safe before the condition was recorded, so the as-found state is lost. */
-	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bConditionLost = false;
+	/** Collected and bagged (after marking); a tag is shown on collection. */
+	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bCollected = false;
+	/** Sent to the crime lab; result available once the world time passes LabReadyTime. */
+	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bSubmittedToLab = false;
+	UPROPERTY(BlueprintReadOnly, Category = "Evidence") double LabReadyTime = 0.0;
+	UPROPERTY(BlueprintReadOnly, Category = "Evidence") bool bLabResultAnnounced = false;
 
 	UFUNCTION(BlueprintPure, Category = "Evidence") bool IsDocumented() const { return MarkerNumber > 0; }
 	UFUNCTION(BlueprintPure, Category = "Evidence") bool IsInReport() const { return MarkerNumber > 0 && !bExcluded; }
@@ -58,8 +62,17 @@ public:
 	EAMDefectCall TruthCall(const FVector& ShotDirection) const;
 	FString CallLabel(EAMDefectCall InCall) const;
 
-	/** Glass: what the edge examination shows (crater and bevel on the exit face). */
-	FString GetEdgeFinding(const FVector& ShotDirection) const;
+	/**
+	 * Glass: what the edge examination shows. Observations only; the player draws the conclusions.
+	 * CrackRelation: +1 = this hole was made after another on the same pane, -1 = before, 0 = only hole.
+	 */
+	FString GetEdgeFinding(const FVector& ShotDirection, int32 CrackRelation) const;
+	/** Whether this can be picked up and bagged (walls and glass stay in place; bullets after digging out). */
+	bool IsCollectable() const;
+	/** Plain description written on the evidence tag. */
+	FString GetTagDescription() const;
+	/** Hides the item itself once it has been bagged; the numbered marker stays. */
+	void ShowCollected();
 	/** Firearms: visible condition (no handling). */
 	TArray<FString> GetConditionLines() const;
 	/** Firearms: contents found while unloading. */

@@ -43,7 +43,9 @@ against what really happened.
 | 5 6 7 | Seat a rod, recover the projectile, run a string |
 | 8 | Call a defect: entry / exit / ricochet / not a bullet (glass: which side the shot came from) |
 | 9 | Glass: examine the edge. Firearm: record its condition as found, hands off |
-| 0 | Firearm: unload and make safe (do 9 first) |
+| 0 | Firearm: unload |
+| P | Bag and tag a marked item (cartridge cases, guns, the clock, bullets after digging them out); its tag is shown briefly |
+| L | Send a bagged item to the crime lab (limited requests per case; the report arrives a little later) |
 | X | Leave a marked item out of the report |
 | G | Place a shooter figure |
 | Tab, Enter | Report, submit |

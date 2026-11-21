@@ -49,6 +49,7 @@ private:
 
 	void Line(const FString& Text, float X, float& Y, const FLinearColor& Color, float Scale = 1.f);
 	void WrapLines(const FString& Text, float X, float& Y, const FLinearColor& Color);
+	void DrawEvidenceTag(const struct FAMEvidenceTag& Tag, double Age, float W, float H);
 
 	FString LastMessage;
 	double LastMessageTime = -100.0;

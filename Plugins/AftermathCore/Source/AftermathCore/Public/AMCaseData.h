@@ -22,6 +22,11 @@ struct FAMCaseJson
 	UPROPERTY() TArray<FAMEvidenceDef> Evidence;
 	UPROPERTY() TArray<FString> SequenceEvidenceIds;
 	UPROPERTY() int32 Swabs = 8;
+	UPROPERTY() int32 LabRequests = 6;
+	UPROPERTY() float LabTurnaroundSeconds = 45.f;
+	UPROPERTY() FString SceneDate;
+	UPROPERTY() FString ArrivalTime;
+	UPROPERTY() FString InvestigatorName;
 	UPROPERTY() FAMTolerances Tolerances;
 };
 
@@ -43,6 +48,15 @@ public:
 	/** Traces that prove the firing order; all must be in the report for full sequence points. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ground truth") TArray<FString> SequenceEvidenceIds;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Rules") int32 Swabs = 8;
+	/** How many items the crime lab will examine for this case. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Rules") int32 LabRequests = 6;
+	/** Real seconds until a lab report comes back. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Rules") float LabTurnaroundSeconds = 45.f;
+	/** Written on evidence tags, e.g. "04 Nov 2026". */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tags") FString SceneDate;
+	/** Scene clock when the player arrives, "HH:MM"; tag times count on from here. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tags") FString ArrivalTime = TEXT("03:00");
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tags") FString InvestigatorName = TEXT("Investigator");
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Rules") FAMTolerances Tolerances;
 
 	/** Path to the case JSON, relative to the project folder. */

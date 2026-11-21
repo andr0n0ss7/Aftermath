@@ -241,6 +241,20 @@ struct FAMClaims
 	UPROPERTY(BlueprintReadWrite) FString StatementVerdict;
 };
 
+/** What is written on an evidence tag when an item is bagged. */
+USTRUCT(BlueprintType)
+struct FAMEvidenceTag
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly) FString CaseNumber;
+	UPROPERTY(BlueprintReadOnly) int32 ItemNumber = 0;
+	UPROPERTY(BlueprintReadOnly) FString Description;
+	UPROPERTY(BlueprintReadOnly) FString Location;
+	UPROPERTY(BlueprintReadOnly) FString DateTime;
+	UPROPERTY(BlueprintReadOnly) FString CollectedBy;
+};
+
 USTRUCT(BlueprintType)
 struct FAMScoreLine
 {

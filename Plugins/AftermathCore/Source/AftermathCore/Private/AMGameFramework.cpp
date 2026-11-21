@@ -105,6 +105,47 @@ void AAMDebugHUD::WrapLines(const FString& Text, float X, float& Y, const FLinea
 	}
 }
 
+void AAMDebugHUD::DrawEvidenceTag(const FAMEvidenceTag& Tag, double Age, float W, float H)
+{
+	// A manila evidence tag that slides up, holds, and fades: about 3.5 seconds in all.
+	const double Show = 3.5;
+	if (Age < 0.0 || Age > Show) { return; }
+	const float In = FMath::Clamp(float(Age / 0.25), 0.f, 1.f);
+	const float Out = FMath::Clamp(float((Show - Age) / 0.5), 0.f, 1.f);
+	const float A = FMath::Min(In, Out);
+	const float TW = 380.f, TH = 230.f;
+	const float X = W * 0.5f - TW * 0.5f;
+	const float Y = H - TH - 150.f + (1.f - In) * 40.f;
+	auto C = [A](float R, float G, float B) { return FLinearColor(R, G, B, A); };
+
+	DrawRect(C(0.f, 0.f, 0.f), X + 5, Y + 6, TW, TH);              // shadow
+	DrawRect(C(0.86f, 0.76f, 0.55f), X, Y, TW, TH);                 // manila card
+	DrawRect(C(0.62f, 0.12f, 0.10f), X, Y, TW, 34);                 // red header band
+	DrawRect(C(0.55f, 0.47f, 0.33f), X + 16, Y + 9, 16, 16);        // reinforced string hole
+	DrawRect(C(0.86f, 0.76f, 0.55f), X + 20, Y + 13, 8, 8);
+	UFont* Font = GEngine->GetMediumFont();
+	DrawText(TEXT("EVIDENCE"), C(1.f, 0.96f, 0.9f), X + 44, Y + 7, Font, 1.2f);
+	DrawText(FString::Printf(TEXT("ITEM %d"), Tag.ItemNumber), C(1.f, 0.96f, 0.9f), X + TW - 104, Y + 7, Font, 1.2f);
+
+	const FLinearColor Ink = C(0.12f, 0.10f, 0.08f);
+	const FLinearColor Pen = C(0.08f, 0.15f, 0.42f);   // handwritten entries in blue ink
+	const FLinearColor Rule = C(0.55f, 0.47f, 0.33f);
+	float LY = Y + 46.f;
+	auto Field = [&](const TCHAR* Label, const FString& Value)
+	{
+		DrawText(Label, Ink, X + 14, LY, Font, 0.78f);
+		DrawText(Value.Left(44), Pen, X + 124, LY - 2, Font, 0.95f);
+		DrawLine(X + 120, LY + 18, X + TW - 14, LY + 18, Rule, 1.f);
+		LY += 29.f;
+	};
+	Field(TEXT("CASE NO."), Tag.CaseNumber);
+	Field(TEXT("DESCRIPTION"), Tag.Description);
+	Field(TEXT("LOCATION"), Tag.Location);
+	Field(TEXT("DATE / TIME"), Tag.DateTime);
+	Field(TEXT("COLLECTED BY"), Tag.CollectedBy);
+	Field(TEXT("RECEIVED BY"), FString());
+}
+
 void AAMDebugHUD::DrawHUD()
 {
 	Super::DrawHUD();
@@ -137,8 +178,8 @@ void AAMDebugHUD::DrawHUD()
 	{
 		Line(FString::Printf(TEXT("CASE %s  %s"), *Sub->Case->CaseId, *Sub->Case->Title.ToString()), 20.f, Y, AMHud::Marker);
 	}
-	Line(FString::Printf(TEXT("Swabs %d   Documented %d   Strings %d   Figures %d   %s"),
-		Sub->SwabsLeft, Sub->CountDocumented(), Sub->Strings.Num(), Sub->Figures.Num(),
+	Line(FString::Printf(TEXT("Swabs %d   Lab requests %d   Documented %d   Strings %d   Figures %d   %s"),
+		Sub->SwabsLeft, Sub->LabRequestsLeft, Sub->CountDocumented(), Sub->Strings.Num(), Sub->Figures.Num(),
 		Sub->bAssisted ? TEXT("Assisted") : TEXT("Expert")), 20.f, Y, AMHud::Quiet);
 
 	// Selected trace panel.
@@ -167,15 +208,17 @@ void AAMDebugHUD::DrawHUD()
 		if (E->bRodPlaced) { Line(TEXT("Rod seated through both faces"), PX, PY, AMHud::Ink); }
 		if (E->bProjectileRecovered) { WrapLines(TEXT("Projectile  ") + E->GetProjectileDescription(), PX, PY, AMHud::Ink); }
 		if (E->IsCallable()) { Line(TEXT("Your call  ") + E->CallLabel(E->Call), PX, PY, AMHud::Marker); }
-		if (E->bEdgeExamined) { WrapLines(TEXT("Edge  ") + E->GetEdgeFinding(Sub->ShotDirectionFor(E)), PX, PY, AMHud::Ink); }
+		if (E->bEdgeExamined) { WrapLines(TEXT("Edge  ") + Sub->DescribeGlassEdge(E), PX, PY, AMHud::Ink); }
 		if (E->IsWeapon())
 		{
 			if (E->bConditionRecorded) { for (const FString& L : E->GetConditionLines()) { WrapLines(L, PX, PY, AMHud::Ink); } }
-			else if (E->bConditionLost) { Line(TEXT("As-found condition LOST (handled before recording)"), PX, PY, AMHud::Marker); }
 			if (E->bMadeSafe) { for (const FString& L : E->GetUnloadLines()) { WrapLines(L, PX, PY, AMHud::Ink); } }
 		}
+		if (E->bCollected) { Line(TEXT("Bagged and tagged"), PX, PY, AMHud::Ink); }
+		const FString Lab = Sub->GetLabResult(E);
+		if (!Lab.IsEmpty()) { WrapLines(TEXT("Lab  ") + Lab, PX, PY, AMHud::Ink); }
 		PY += 6.f;
-		Line(TEXT("[1] Mark  [X] Exclude from report"), PX, PY, AMHud::Marker);
+		Line(TEXT("[1] Mark  [P] Bag and tag  [L] Send to lab  [X] Exclude"), PX, PY, AMHud::Marker);
 		if (E->IsWeapon())
 		{
 			Line(TEXT("[9] Record condition as found  [0] Unload and make safe"), PX, PY, AMHud::Marker);
@@ -212,6 +255,8 @@ void AAMDebugHUD::DrawHUD()
 			}
 		}
 	}
+
+	DrawEvidenceTag(Sub->LastTag, GetWorld()->GetTimeSeconds() - Sub->LastTagTime, W, H);
 
 	// Message line.
 	if (GetWorld()->GetTimeSeconds() - LastMessageTime < 4.0)

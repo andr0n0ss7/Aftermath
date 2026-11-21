@@ -20,7 +20,8 @@ One scene = one Unreal level. Two-floor scenes load each floor as a sub-level.
 | --- | --- |
 | Unique meshes | 40–80 (modular walls, doors, windows, furniture, a few hero props) |
 | Placed props per room | 15–30 |
-| Evidence traces | 12–30 per case, including 3–6 decoys |
+| Evidence traces | 12–30 per case |
+| Decoys | Optional: some cases have none, others 1–3. Never so many that every trace is suspect |
 | Surface materials | 6–12 from the library below |
 | Dynamic lights | flashlight + 1 per room at most |
 
@@ -65,4 +66,4 @@ surface needs its own entry, exit and ricochet textures before it appears in a c
 
 - A trace must be findable with the flashlight from 1.5 m; small ones (cases, smears) may need crouching, never pixel-hunting.
 - Lighting contrast: rooms lit dimly enough that the flashlight matters, never so dark that the room can't be read.
-- Every decoy has a test that rules it out (no lead, no exit, dust or paint over it, tarnish).
+- Where a case has decoys, each one has a test that rules it out (no lead, no exit, dust or paint over it).

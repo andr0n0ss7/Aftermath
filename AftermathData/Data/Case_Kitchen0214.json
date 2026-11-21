@@ -589,46 +589,6 @@
    "SurfaceId": ""
   },
   {
-   "Id": "E13",
-   "Kind": "OldRimfireCase",
-   "Role": "Decoy",
-   "Location": "Hallway floor, corner",
-   "Position": {
-    "X": -42.0,
-    "Y": 36.0,
-    "Z": 0.3
-   },
-   "ShotId": "",
-   "DiameterMm": 0,
-   "ImpactAngleDeg": 0.0,
-   "LongAxisDeg": 0.0,
-   "PartnerId": "",
-   "Projectile": "None",
-   "bHidden": false,
-   "bOnFloor": true,
-   "YawDeg": 120.32,
-   "Seed": 2164,
-   "Normal": {
-    "X": 0,
-    "Y": 0,
-    "Z": 1
-   },
-   "SurfaceRight": {
-    "X": 1,
-    "Y": 0,
-    "Z": 0
-   },
-   "SurfaceUp": {
-    "X": 0,
-    "Y": 1,
-    "Z": 0
-   },
-   "NearSideLabel": "",
-   "FarSideLabel": "",
-   "DepartureAngleDeg": 0,
-   "SurfaceId": ""
-  },
-  {
    "Id": "E14",
    "Kind": "PaintedHole",
    "Role": "Decoy",
@@ -907,5 +867,10 @@
   "ShooterFullCm": 75,
   "ShooterPartialCm": 150,
   "ConvergenceRadiusCm": 32
- }
+ },
+ "LabRequests": 6,
+ "LabTurnaroundSeconds": 45,
+ "SceneDate": "04 Nov 2026",
+ "ArrivalTime": "02:58",
+ "InvestigatorName": "Lead investigator"
 }

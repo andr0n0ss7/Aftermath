@@ -93,6 +93,6 @@ git lfs pull
 ## Checks
 
 - [ ] Compiles; Session Frontend → Automation → "Aftermath": all tests pass.
-- [ ] All 19 traces exist while playing (`Evidence_E01` … `Evidence_E19`).
+- [ ] All 18 traces exist while playing (`Evidence_E..` actors in the Outliner).
 - [ ] 60 fps at 1080p on Medium on the 4 GB test card (`stat fps` in the console).
 - [ ] `-dx12` launch also works.

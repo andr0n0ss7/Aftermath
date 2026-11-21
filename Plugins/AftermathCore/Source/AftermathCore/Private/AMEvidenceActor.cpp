@@ -255,15 +255,44 @@ FString AAMEvidenceActor::CallLabel(EAMDefectCall InCall) const
 	}
 }
 
-FString AAMEvidenceActor::GetEdgeFinding(const FVector& ShotDirection) const
+FString AAMEvidenceActor::GetEdgeFinding(const FVector& ShotDirection, int32 CrackRelation) const
 {
-	// The exit face of glass loses a cone of flakes, so the crater (and the bevel on the hole's edge) widens toward it.
+	// What the glass shows; deliberately no conclusions.
 	const bool bFromNear = FVector::DotProduct(ShotDirection, Def.Normal) < 0.f;
-	const FString ExitFace = bFromNear ? Def.FarSideLabel : Def.NearSideLabel;
 	const FString EntryFace = bFromNear ? Def.NearSideLabel : Def.FarSideLabel;
-	return FString::Printf(TEXT("Small, sharp-edged opening on the face toward %s. On the face toward %s the hole opens into a "
-		"shallow cone: flakes are missing and the edge is bevelled. Radial cracks on that face show conchoidal ridges."),
-		*EntryFace, *ExitFace);
+	const FString ExitFace = bFromNear ? Def.FarSideLabel : Def.NearSideLabel;
+	FString Finding = FString::Printf(TEXT("On the face toward %s the hole is small and sharp-edged. On the face toward %s it opens "
+		"into a shallow cone: flakes are missing and the edge is bevelled."), *EntryFace, *ExitFace);
+
+	// Side-to-side: chipping is slight on the side the bullet came from and heavy opposite; radial cracks at the
+	// small opening are short and straight on that side, long on the other. Described from the small-hole side.
+	const FVector EntryNormal = bFromNear ? Def.Normal : -Def.Normal;
+	const FVector Facing = (-EntryNormal * FVector(1.f, 1.f, 0.f)).GetSafeNormal();
+	const FVector ViewerRight(-Facing.Y, Facing.X, 0.f);
+	const float Sideways = FVector::DotProduct(ShotDirection.GetSafeNormal(), ViewerRight);
+	const float SideAngleDeg = FMath::RadiansToDegrees(FMath::Asin(FMath::Abs(Sideways)));
+	if (SideAngleDeg < 5.f)
+	{
+		Finding += TEXT(" The chipping around the cone is even all round, and the radial cracks are of similar length on both sides.");
+	}
+	else
+	{
+		const TCHAR* Light = Sideways > 0.f ? TEXT("left") : TEXT("right");
+		const TCHAR* Heavy = Sideways > 0.f ? TEXT("right") : TEXT("left");
+		Finding += FString::Printf(TEXT(" Seen from %s, the cone is chipped %s on the %s and only slightly on the %s. Around the small "
+			"opening the radial cracks are short and straight on the %s, with %s on the %s."),
+			*EntryFace, SideAngleDeg > 30.f ? TEXT("very heavily") : TEXT("heavily"), Heavy, Light, Light,
+			SideAngleDeg > 30.f ? TEXT("two long ones") : TEXT("one long one"), Heavy);
+	}
+	if (CrackRelation > 0)
+	{
+		Finding += TEXT(" Several of its cracks stop dead where they meet the other hole's cracks.");
+	}
+	else if (CrackRelation < 0)
+	{
+		Finding += TEXT(" Its cracks run on unbroken; the other hole's cracks stop where they meet them.");
+	}
+	return Finding;
 }
 
 TArray<FString> AAMEvidenceActor::GetConditionLines() const
@@ -463,5 +492,52 @@ void AAMEvidenceActor::ShowMadeSafe()
 		// Magazine out, laid beside the pistol.
 		Part->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 		Part->SetWorldLocation(Def.Position + Def.SurfaceUp * 14.f);
+	}
+}
+
+bool AAMEvidenceActor::IsCollectable() const
+{
+	switch (Def.Kind)
+	{
+	case EAMEvidenceKind::CartridgeCase:
+	case EAMEvidenceKind::OldRimfireCase:
+	case EAMEvidenceKind::Pistol:
+	case EAMEvidenceKind::Revolver:
+	case EAMEvidenceKind::Clock:
+		return true;
+	default:
+		// The bullet is bagged once it has been dug out; the wall or panel stays.
+		return Def.Projectile != EAMProjectile::None && bProjectileRecovered;
+	}
+}
+
+FString AAMEvidenceActor::GetTagDescription() const
+{
+	switch (Def.Kind)
+	{
+	case EAMEvidenceKind::CartridgeCase:  return TEXT("Cartridge case, brass, headstamp 9mm LUGER");
+	case EAMEvidenceKind::OldRimfireCase: return TEXT("Cartridge case, rimfire, tarnished");
+	case EAMEvidenceKind::Pistol:
+	case EAMEvidenceKind::Revolver:       return Def.Weapon.Description.IsEmpty() ? GetShortLabel() : Def.Weapon.Description + TEXT(", unloaded");
+	case EAMEvidenceKind::Clock:          return TEXT("Wall clock, glass cracked, stopped at 2:14");
+	default: break;
+	}
+	switch (Def.Projectile)
+	{
+	case EAMProjectile::Luger9mmFMJ:          return TEXT("Fired bullet, 9 mm, copper jacket");
+	case EAMProjectile::Special38LRN:         return TEXT("Fired bullet, .38, lead");
+	case EAMProjectile::Special38LRNDeformed: return TEXT("Fired bullet, .38, lead, flattened on one side");
+	default:                                  return GetShortLabel();
+	}
+}
+
+void AAMEvidenceActor::ShowCollected()
+{
+	bCollected = true;
+	if (IsWeapon() || Def.Kind == EAMEvidenceKind::CartridgeCase || Def.Kind == EAMEvidenceKind::OldRimfireCase
+		|| Def.Kind == EAMEvidenceKind::Clock)
+	{
+		Prop->SetVisibility(false);
+		Part->SetVisibility(false);
 	}
 }

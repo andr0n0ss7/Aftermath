@@ -44,6 +44,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool RecordCondition(AAMEvidenceActor* E);
 	/** Firearms: unload and make safe; reveals magazine, chamber or cylinder contents. */
 	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool MakeSafe(AAMEvidenceActor* E);
+	/** Bags and tags an item. Only after it has been marked; firearms are unloaded first, automatically. */
+	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool Collect(AAMEvidenceActor* E);
+	/** Sends a collected item to the crime lab. Uses one of the case's lab requests. */
+	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") bool SubmitToLab(AAMEvidenceActor* E);
+	/** Lab report for an item: empty if never sent, a waiting note if not back yet. */
+	UFUNCTION(BlueprintPure, Category = "Aftermath|Tools") FString GetLabResult(const AAMEvidenceActor* E) const;
+	/** Glass edge examination text, including how its cracks meet those of other holes in the same pane. */
+	FString DescribeGlassEdge(const AAMEvidenceActor* E) const;
+	UPROPERTY(BlueprintReadOnly, Category = "Aftermath") int32 LabRequestsLeft = 0;
+	/** The tag shown briefly after the last collection. */
+	UPROPERTY(BlueprintReadOnly, Category = "Aftermath") FAMEvidenceTag LastTag;
+	UPROPERTY(BlueprintReadOnly, Category = "Aftermath") double LastTagTime = -100.0;
 	/** Direction the bullet was travelling when it made this trace (after any ricochet). */
 	FVector ShotDirectionFor(const AAMEvidenceActor* E) const;
 	UFUNCTION(BlueprintCallable, Category = "Aftermath|Tools") int32 PlaceFigure(FVector FloorPoint, float FacingYawDeg);
